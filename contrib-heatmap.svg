@@ -8,44 +8,34 @@
             70% { opacity: 1; transform: scale(1.15); }
             100% { opacity: 1; transform: scale(1); }
         }
-        @keyframes headerFade {
-            0% { opacity: 0; transform: translateY(-5px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
         .bg { fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }
-        .terminal-header { animation: headerFade 0.5s ease-out forwards; }
         .dot-red { fill: #ff5f56; }
         .dot-yellow { fill: #ffbd2e; }
         .dot-green { fill: #27c93f; }
-        .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 13px; fill: #8b949e; font-weight: 600; }
-        .stat-label { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 11px; fill: #8b949e; }
-        .stat-val { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 11px; fill: #3fb950; font-weight: bold; }
-        .axis-label { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #6e7681; }
+        .term-title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; fill: #8b949e; font-weight: 600; }
+        .stat-label { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #8b949e; }
+        .stat-val { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #3fb950; font-weight: bold; }
+        .axis-label { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #6e7681; }
         .day-box {
             animation: boxFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
             transform-box: fill-box;
             transform-origin: center;
         }
-        .day-box:hover {
-            stroke: #58a6ff;
-            stroke-width: 1px;
-            cursor: pointer;
-        }
-        .legend-text { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #6e7681; }
+        .day-box:hover { stroke: #58a6ff; stroke-width: 1px; cursor: pointer; }
+        .legend-text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #6e7681; }
     
 </style>
 </defs>
 <rect width="860" height="215" class="bg" />
-<g class="terminal-header">
+<g>
   <circle cx="24" cy="24" r="5" class="dot-red" />
   <circle cx="39" cy="24" r="5" class="dot-yellow" />
   <circle cx="54" cy="24" r="5" class="dot-green" />
-  <text x="70" y="28" class="term-title">diwakarr@github:~ $ ./contributions.sh</text>
-  <text x="440" y="28" class="stat-label">Contributions: <tspan class="stat-val">133</tspan></text>
+  <text x="70" y="28" class="term-title">diwakar@github:~ $ ./contributions.sh</text>
+  <text x="440" y="28" class="stat-label">Contributions: <tspan class="stat-val">136</tspan></text>
   <text x="570" y="28" class="stat-label">Streak: <tspan class="stat-val">1d</tspan></text>
   <text x="660" y="28" class="stat-label">Max Streak: <tspan class="stat-val">5d</tspan></text>
-  <text x="770" y="28" class="stat-label">Best: <tspan class="stat-val">22</tspan></text>
 </g>
 <line x1="15" y1="42" x2="845" y2="42" stroke="#21262d" stroke-width="1" />
 <text x="42" y="58" class="axis-label">Oct</text>
@@ -378,7 +368,7 @@
   <rect x="658" y="110" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.915s;"><title>2026-08-12: 0 contributions</title></rect>
   <rect x="658" y="124" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.95s;"><title>2026-08-13: 0 contributions</title></rect>
   <rect x="658" y="138" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.985s;"><title>2026-08-14: 0 contributions</title></rect>
-  <rect x="658" y="152" width="11" height="11" rx="2" ry="2" fill="#39d353" class="day-box" style="animation-delay: 1.02s;"><title>2026-08-15: 17 contributions</title></rect>
+  <rect x="658" y="152" width="11" height="11" rx="2" ry="2" fill="#26a641" class="day-box" style="animation-delay: 1.02s;"><title>2026-08-15: 17 contributions</title></rect>
   <rect x="672" y="68" width="11" height="11" rx="2" ry="2" fill="#0e4429" class="day-box" style="animation-delay: 0.825s;"><title>2026-08-16: 3 contributions</title></rect>
   <rect x="672" y="82" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.86s;"><title>2026-08-17: 0 contributions</title></rect>
   <rect x="672" y="96" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.895s;"><title>2026-08-18: 0 contributions</title></rect>
@@ -394,7 +384,7 @@
   <rect x="686" y="138" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 1.015s;"><title>2026-08-28: 0 contributions</title></rect>
   <rect x="686" y="152" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 1.05s;"><title>2026-08-29: 0 contributions</title></rect>
   <rect x="700" y="68" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.855s;"><title>2026-08-30: 0 contributions</title></rect>
-  <rect x="700" y="82" width="11" height="11" rx="2" ry="2" fill="#39d353" class="day-box" style="animation-delay: 0.89s;"><title>2026-08-31: 18 contributions</title></rect>
+  <rect x="700" y="82" width="11" height="11" rx="2" ry="2" fill="#26a641" class="day-box" style="animation-delay: 0.89s;"><title>2026-08-31: 18 contributions</title></rect>
   <rect x="700" y="96" width="11" height="11" rx="2" ry="2" fill="#0e4429" class="day-box" style="animation-delay: 0.925s;"><title>2026-09-01: 2 contributions</title></rect>
   <rect x="700" y="110" width="11" height="11" rx="2" ry="2" fill="#26a641" class="day-box" style="animation-delay: 0.96s;"><title>2026-09-02: 14 contributions</title></rect>
   <rect x="700" y="124" width="11" height="11" rx="2" ry="2" fill="#006d32" class="day-box" style="animation-delay: 0.995s;"><title>2026-09-03: 7 contributions</title></rect>
@@ -432,11 +422,11 @@
   <rect x="770" y="82" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 0.965s;"><title>2026-10-05: 0 contributions</title></rect>
   <rect x="770" y="96" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 1.0s;"><title>2026-10-06: 0 contributions</title></rect>
   <rect x="770" y="110" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 1.035s;"><title>2026-10-07: 0 contributions</title></rect>
-  <rect x="770" y="124" width="11" height="11" rx="2" ry="2" fill="#39d353" class="day-box" style="animation-delay: 1.07s;"><title>2026-10-08: 22 contributions</title></rect>
+  <rect x="770" y="124" width="11" height="11" rx="2" ry="2" fill="#39d353" class="day-box" style="animation-delay: 1.07s;"><title>2026-10-08: 25 contributions</title></rect>
   <rect x="770" y="138" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 1.105s;"><title>2026-10-09: 0 contributions</title></rect>
   <rect x="770" y="152" width="11" height="11" rx="2" ry="2" fill="#161b22" class="day-box" style="animation-delay: 1.14s;"><title>2026-10-10: 0 contributions</title></rect>
 </g>
-<text x="42" y="191" style="font-family: 'Fira Code', Consolas, monospace; font-size: 13px; font-weight: bold; fill: #f0f6fc;">133 contributions in the last year</text>
+<text x="42" y="191" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; font-weight: bold; fill: #e6edf3;">136 contributions in the last year</text>
 <text x="710" y="191" class="legend-text">Less</text>
 <rect x="740" y="182" width="11" height="11" rx="2" ry="2" fill="#161b22" />
 <rect x="754" y="182" width="11" height="11" rx="2" ry="2" fill="#0e4429" />

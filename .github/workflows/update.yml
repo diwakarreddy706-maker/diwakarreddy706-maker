@@ -35,6 +35,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add contrib-heatmap.svg stats.svg info-card.svg data/contributions.json
+          git add contrib-heatmap.svg stats.svg data/contributions.json
           git diff --staged --quiet || git commit -m "Auto-update contribution heatmap and stats SVGs"
           git push

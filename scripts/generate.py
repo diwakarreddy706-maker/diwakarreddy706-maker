@@ -21,7 +21,6 @@ DATA_FILE = os.path.join(DATA_DIR, "contributions.json")
 
 HEATMAP_SVG = os.path.join(BASE_DIR, "contrib-heatmap.svg")
 STATS_SVG = os.path.join(BASE_DIR, "stats.svg")
-INFO_CARD_SVG = os.path.join(BASE_DIR, "info-card.svg")
 
 USERNAME = "diwakarreddy706-maker"
 
@@ -518,9 +517,7 @@ def main():
     stats_content = generate_stats_svg(data)
     with open(STATS_SVG, "w", encoding="utf-8") as f:
         f.write(stats_content)
-    with open(INFO_CARD_SVG, "w", encoding="utf-8") as f:
-        f.write(stats_content)
-    print(f"[SUCCESS] Stats SVG written to: {STATS_SVG} & {INFO_CARD_SVG}")
+    print(f"[SUCCESS] Stats SVG written to: {STATS_SVG}")
 
 
 if __name__ == "__main__":
