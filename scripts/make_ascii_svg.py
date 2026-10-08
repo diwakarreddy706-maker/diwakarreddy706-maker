@@ -1,33 +1,28 @@
 #!/usr/bin/env python3
 """
 make_ascii_svg.py
-Redesigns ascii-portrait.svg with perfect face recognizability and layout fit:
-- Generates ASCII directly from IMG_9746.JPG.jpeg using tight face & headshot crop
-- Uses dark-hair to dense symbol / light-skin to mid symbol mapping ('@%#*+=-:. ')
-- Character multi-color shading (dark hair/beard: #7ee787, skin/face: #3fb950, bg: #26a641)
-- Fits 100% inside terminal borders without overflow (width=34, font-size=9.5px, x=185 centered)
-- 6-Phase Terminal Animation Loop (10s continuous cycle):
-  Phase 1: Startup & Command Typing ($ ./render_portrait.sh)
-  Phase 2: Loading Sequence & Progress Bar ([████████████████] 100%)
-  Phase 3: Top-to-Bottom Line-by-Line ASCII Render
-  Phase 4: Subtle Top-to-Bottom Scanline Beam Pass
-  Phase 5: Finished State (PORTRAIT_RENDERED ✓ + Blinking Cursor █)
-  Phase 6: Smooth Loop Restart Cycle
+Generates a high-definition, professional animated terminal ASCII portrait (ascii-portrait.svg):
+- Fine-grained 44-column grid resolution for smooth, realistic facial detail
+- Generated directly from IMG_9746.JPG.jpeg with face/headshot framing
+- Controlled density ramp: "@%#*+=-:. "
+- 3-tier color shading (hair/beard: #7ee787, face/skin: #3fb950, bg: #26a641)
+- Perfect terminal layout fit (35px padding on left and right, 0% border overflow)
+- Smooth 6-Phase Terminal Animation Loop (10s continuous cycle)
 """
 
 import os
 import sys
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageFilter
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 PREPROCESSED_PHOTO = os.path.join(DATA_DIR, "preprocessed_photo.png")
 OUTPUT_SVG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ascii-portrait.svg")
 
-# Density ramp tuned for dark hair / light skin contrast
+# Density ramp tuned for dark hair & crisp face contrast
 DENSITY_RAMP = "@%#*+=-:. "
 
 
-def generate_ascii_grid_from_photo(photo_path, ascii_width=34):
+def generate_ascii_grid_from_photo(photo_path, ascii_width=44):
     if not os.path.exists(photo_path):
         return None
 
@@ -35,24 +30,24 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=34):
         img = Image.open(photo_path)
         w, h = img.size
 
-        # Tight Face, Hair, Beard & Shoulder Crop Focus from IMG_9746.JPG.jpeg
+        # Frame head, hair, eyes, smile, beard & shoulders from IMG_9746.JPG.jpeg
         if 0.8 <= (w / float(h)) <= 1.2:
-            left = int(w * 0.36)
-            top = int(h * 0.23)
-            right = int(w * 0.64)
-            bottom = int(h * 0.58)
+            left = int(w * 0.35)
+            top = int(h * 0.22)
+            right = int(w * 0.65)
+            bottom = int(h * 0.60)
             img = img.crop((left, top, right, bottom))
 
-        # Convert to grayscale & optimize contrast for crisp face/hair contrast
+        # Convert to grayscale & sharpen for high-definition facial contrast
         gray = img.convert("L")
-        enhancer = ImageEnhance.Contrast(gray)
-        enhanced = enhancer.enhance(2.2)
+        gray_contrast = ImageEnhance.Contrast(gray).enhance(2.1)
+        gray_sharp = ImageEnhance.Sharpness(gray_contrast).enhance(2.0)
 
         # Aspect ratio compensation for monospace character height (~0.52 ratio)
-        w_percent = ascii_width / float(enhanced.size[0])
-        ascii_height = int((float(enhanced.size[1]) * float(w_percent)) * 0.52)
+        w_percent = ascii_width / float(gray_sharp.size[0])
+        ascii_height = int((float(gray_sharp.size[1]) * float(w_percent)) * 0.52)
 
-        img_resized = enhanced.resize((ascii_width, ascii_height), Image.Resampling.LANCZOS)
+        img_resized = gray_sharp.resize((ascii_width, ascii_height), Image.Resampling.LANCZOS)
         pixels = list(img_resized.tobytes())
 
         ramp_len = len(DENSITY_RAMP)
@@ -68,11 +63,11 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=34):
                 
                 # Shading colors: dense hair/beard (#7ee787 highlight green), face/skin (#3fb950), bg (#26a641)
                 if char_idx <= 2:
-                    color = "#7ee787"  # Dense hair, eyes, beard
+                    color = "#7ee787"  # Hair, eyes, beard
                 elif char_idx <= 6:
-                    color = "#3fb950"  # Face, skin tone, features
+                    color = "#3fb950"  # Skin tone & facial features
                 else:
-                    color = "#26a641"  # Muted background / subtle dots
+                    color = "#26a641"  # Background & subtle dots
                     
                 line_cells.append({"char": char_val, "color": color})
             lines.append(line_cells)
@@ -95,7 +90,7 @@ def generate_redesigned_animated_svg(ascii_lines):
     
     # CRT Scanline Pattern
     svg_lines.append('  <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">')
-    svg_lines.append('    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.25" />')
+    svg_lines.append('    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.2" />')
     svg_lines.append('  </pattern>')
 
     # Vertical Scanline Laser Gradient
@@ -109,39 +104,39 @@ def generate_redesigned_animated_svg(ascii_lines):
     svg_lines.append(f'''
         /* Overall 10s Timeline */
         @keyframes windowAppear {{
-            0% {{ opacity: 0; transform: scale(0.97); }}
+            0% {{ opacity: 0; transform: scale(0.98); }}
             3% {{ opacity: 1; transform: scale(1); }}
             92% {{ opacity: 1; transform: scale(1); }}
-            97% {{ opacity: 0; transform: scale(0.98); }}
+            97% {{ opacity: 0; transform: scale(0.99); }}
             100% {{ opacity: 0; }}
         }}
         @keyframes typeCmd {{
             0% {{ width: 0ch; opacity: 1; }}
-            10% {{ width: 23ch; opacity: 1; }}
+            8% {{ width: 23ch; opacity: 1; }}
             92% {{ width: 23ch; opacity: 1; }}
             97% {{ width: 0ch; opacity: 0; }}
             100% {{ width: 0ch; opacity: 0; }}
         }}
         @keyframes showLoadingText {{
-            0%, 9% {{ opacity: 0; }}
-            11% {{ opacity: 1; }}
+            0%, 7% {{ opacity: 0; }}
+            9% {{ opacity: 1; }}
             92% {{ opacity: 1; }}
             97% {{ opacity: 0; }}
             100% {{ opacity: 0; }}
         }}
         @keyframes progressStep {{
-            0%, 11% {{ width: 0px; }}
-            13% {{ width: 35px; }}  /* 25% */
-            15% {{ width: 70px; }}  /* 50% */
-            17% {{ width: 105px; }} /* 75% */
-            19% {{ width: 140px; }} /* 100% */
+            0%, 9% {{ width: 0px; }}
+            11% {{ width: 35px; }}  /* 25% */
+            13% {{ width: 70px; }}  /* 50% */
+            15% {{ width: 105px; }} /* 75% */
+            17% {{ width: 140px; }} /* 100% */
             92% {{ width: 140px; }}
             97% {{ width: 0px; }}
             100% {{ width: 0px; }}
         }}
         @keyframes laserSweep {{
-            0%, 46% {{ transform: translateY(0px); opacity: 0; }}
-            48% {{ opacity: 0.85; }}
+            0%, 45% {{ transform: translateY(0px); opacity: 0; }}
+            47% {{ opacity: 0.85; }}
             65% {{ transform: translateY(300px); opacity: 0.85; }}
             67% {{ opacity: 0; }}
             100% {{ opacity: 0; }}
@@ -183,13 +178,13 @@ def generate_redesigned_animated_svg(ascii_lines):
         .progress-bg {{ fill: #161b22; rx: 3px; ry: 3px; }}
         .progress-bar {{ fill: #3fb950; rx: 3px; ry: 3px; animation: progressStep {total_loop_time}s ease-out infinite; }}
         
-        /* Perfectly Centered ASCII Face Grid (fits 100% inside terminal borders) */
+        /* High-Definition Centered ASCII Face Grid (fits 100% inside terminal borders with 35px padding) */
         .ascii-row-txt {{
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 9.5px;
+            font-size: 7.5px;
             font-weight: bold;
             white-space: pre;
-            letter-spacing: 0.1px;
+            letter-spacing: 0.3px;
             text-anchor: middle;
         }}
         .laser-beam {{
@@ -232,23 +227,23 @@ def generate_redesigned_animated_svg(ascii_lines):
     svg_lines.append('    <rect x="0" y="8" width="0" height="6" class="progress-bar" />')
     svg_lines.append('  </g>')
 
-    # PHASE 3: Large Centered Line-by-Line ASCII Portrait Reveal
-    svg_lines.append('  <g transform="translate(0, 108)">')
+    # PHASE 3: High-Definition Centered ASCII Portrait Reveal
+    svg_lines.append('  <g transform="translate(0, 106)">')
     
     num_rows = len(ascii_lines)
-    # Line reveal between 2.0s and 4.2s (2.2s total reveal time across rows)
-    step_delay = 2.2 / max(num_rows, 1)
+    # Line reveal between 1.8s and 4.3s (2.5s total reveal time across rows)
+    step_delay = 2.5 / max(num_rows, 1)
 
     for i, line_cells in enumerate(ascii_lines):
-        y_pos = i * 13.5
-        row_delay = round(2.0 + (i * step_delay), 2)
+        y_pos = i * 10.5
+        row_delay = round(1.8 + (i * step_delay), 2)
         
         # Row visibility animation
         row_anim = f'''
             @keyframes showRow_{i} {{
                 0% {{ opacity: 0; transform: translateY(-2px); }}
                 {int((row_delay / total_loop_time) * 100)}% {{ opacity: 0; transform: translateY(-2px); }}
-                {int(((row_delay + 0.12) / total_loop_time) * 100)}% {{ opacity: 1; transform: translateY(0); }}
+                {int(((row_delay + 0.1) / total_loop_time) * 100)}% {{ opacity: 1; transform: translateY(0); }}
                 92% {{ opacity: 1; transform: translateY(0); }}
                 97% {{ opacity: 0; }}
                 100% {{ opacity: 0; }}
@@ -299,8 +294,8 @@ def main():
         print("[ERROR] Could not find source photo (IMG_9746.JPG.jpeg).")
         sys.exit(1)
 
-    print(f"[INFO] Generating perfectly fitted & face-focused ASCII portrait from: {raw_photo}")
-    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=34)
+    print(f"[INFO] Generating high-definition fine-grained ASCII portrait from: {raw_photo}")
+    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=44)
 
     if not ascii_lines:
         print("[ERROR] ASCII conversion failed.")
@@ -311,7 +306,7 @@ def main():
     with open(OUTPUT_SVG, "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print(f"[SUCCESS] Perfectly fitted ASCII portrait SVG generated at: {OUTPUT_SVG}")
+    print(f"[SUCCESS] High-definition fine-grained ASCII portrait SVG generated at: {OUTPUT_SVG}")
 
 
 if __name__ == "__main__":
