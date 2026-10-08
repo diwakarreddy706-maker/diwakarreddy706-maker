@@ -6,48 +6,55 @@
   </pattern>
   <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
     <stop offset="0%" stop-color="#3fb950" stop-opacity="0" />
-    <stop offset="50%" stop-color="#56d364" stop-opacity="0.85" />
+    <stop offset="50%" stop-color="#56d364" stop-opacity="0.75" />
     <stop offset="100%" stop-color="#3fb950" stop-opacity="0" />
   </linearGradient>
 <style>
 
-        /* Overall Loop Timeline (10.0s) */
+        /* Overall 10s Timeline */
         @keyframes windowAppear {
-            0% { opacity: 0; transform: scale(0.96); }
-            4% { opacity: 1; transform: scale(1); }
+            0% { opacity: 0; transform: scale(0.97); }
+            3% { opacity: 1; transform: scale(1); }
             92% { opacity: 1; transform: scale(1); }
-            98% { opacity: 0; transform: scale(0.98); }
+            97% { opacity: 0; transform: scale(0.98); }
             100% { opacity: 0; }
         }
         @keyframes typeCmd {
             0% { width: 0ch; opacity: 1; }
-            12% { width: 23ch; opacity: 1; }
+            10% { width: 23ch; opacity: 1; }
             92% { width: 23ch; opacity: 1; }
-            98% { width: 0ch; opacity: 0; }
+            97% { width: 0ch; opacity: 0; }
             100% { width: 0ch; opacity: 0; }
         }
-        @keyframes showLoading {
-            0% { opacity: 0; }
-            14% { opacity: 0; }
-            16% { opacity: 1; }
+        @keyframes showLoadingText {
+            0%, 9% { opacity: 0; }
+            11% { opacity: 1; }
             92% { opacity: 1; }
-            98% { opacity: 0; }
+            97% { opacity: 0; }
             100% { opacity: 0; }
         }
-        @keyframes progressFill {
-            0% { width: 0px; }
-            16% { width: 0px; }
-            25% { width: 140px; }
+        @keyframes progressStep {
+            0%, 11% { width: 0px; }
+            13% { width: 35px; }  /* 25% */
+            15% { width: 70px; }  /* 50% */
+            17% { width: 105px; } /* 75% */
+            19% { width: 140px; } /* 100% */
             92% { width: 140px; }
-            98% { width: 0px; }
+            97% { width: 0px; }
             100% { width: 0px; }
         }
         @keyframes laserSweep {
-            0% { transform: translateY(0px); opacity: 0; }
-            58% { transform: translateY(0px); opacity: 0; }
-            60% { opacity: 0.9; }
-            78% { transform: translateY(300px); opacity: 0.9; }
-            80% { opacity: 0; }
+            0%, 46% { transform: translateY(0px); opacity: 0; }
+            48% { opacity: 0.85; }
+            65% { transform: translateY(300px); opacity: 0.85; }
+            67% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes showFooter {
+            0%, 45% { opacity: 0; }
+            48% { opacity: 1; }
+            92% { opacity: 1; }
+            97% { opacity: 0; }
             100% { opacity: 0; }
         }
         @keyframes cursorBlink {
@@ -75,24 +82,24 @@
             display: inline-block;
             animation: typeCmd 10.0s steps(23) infinite;
         }
-        .loading-box { animation: showLoading 10.0s infinite; }
+        .loading-box { animation: showLoadingText 10.0s infinite; }
         .load-txt { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #8b949e; }
         .progress-bg { fill: #161b22; rx: 3px; ry: 3px; }
-        .progress-bar { fill: #3fb950; rx: 3px; ry: 3px; animation: progressFill 10.0s ease-out infinite; }
+        .progress-bar { fill: #3fb950; rx: 3px; ry: 3px; animation: progressStep 10.0s ease-out infinite; }
         
-        /* Centered bold ASCII Face Grid (75% usable terminal width) */
-        .ascii-text {
+        /* Centered Large ASCII Face Grid (occupies ~75-80% usable terminal space) */
+        .ascii-row-txt {
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 11.5px;
+            font-size: 12.5px;
             font-weight: bold;
-            fill: #3fb950;
             white-space: pre;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.4px;
             text-anchor: middle;
         }
         .laser-beam {
             animation: laserSweep 10.0s ease-in-out infinite;
         }
+        .footer-group { animation: showFooter 10.0s infinite; }
         .footer-txt { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #8b949e; }
         .status-online { fill: #3fb950; font-weight: bold; }
         .blink-cursor { animation: cursorBlink 0.8s infinite; fill: #3fb950; }
@@ -112,59 +119,648 @@
     <text class="prompt-txt">$ ./render_portrait.sh</text>
   </g>
   <g class="loading-box" transform="translate(18, 70)">
-    <text x="0" y="0" class="load-txt">Loading face: IMG_9746.JPG ...</text>
+    <text x="0" y="0" class="load-txt">Loading IMG_9746.JPG.jpeg ...</text>
     <rect x="0" y="8" width="140" height="6" class="progress-bg" />
     <rect x="0" y="8" width="0" height="6" class="progress-bar" />
   </g>
     <style> .row-0 { animation: showRow_0 10.0s ease-out infinite; } </style>
-  <g class="ascii-text" transform="translate(0, 108)">
+  <g transform="translate(0, 108)">
+    <text x="185" y="0.0" class="ascii-row-txt row-0">
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
     <style> .row-1 { animation: showRow_1 10.0s ease-out infinite; } </style>
-    <text x="185" y="0.0" class="row-0">:==*******++**#*+:=+**=:&#160;=-===</text>
+</text>
+    <text x="185" y="15.0" class="ascii-row-txt row-1">
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
     <style> .row-2 { animation: showRow_2 10.0s ease-out infinite; } </style>
-    <text x="185" y="14.5" class="row-1">.&#160;:+##########%%#*#%##%*-+-=+=</text>
+</text>
+    <text x="185" y="30.0" class="ascii-row-txt row-2">
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
     <style> .row-3 { animation: showRow_3 10.0s ease-out infinite; } </style>
-    <text x="185" y="29.0" class="row-2">-.+%##########%########*-+====</text>
+</text>
+    <text x="185" y="45.0" class="ascii-row-txt row-3">
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
     <style> .row-4 { animation: showRow_4 10.0s ease-out infinite; } </style>
-    <text x="185" y="43.5" class="row-3">&#160;&#160;:-*%######***########*-+-+*#</text>
+</text>
+    <text x="185" y="60.0" class="ascii-row-txt row-4">
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
     <style> .row-5 { animation: showRow_5 10.0s ease-out infinite; } </style>
-    <text x="185" y="58.0" class="row-4">*=.:==+##=.&#160;&#160;&#160;&#160;&#160;.-*####*-*###%</text>
+</text>
+    <text x="185" y="75.0" class="ascii-row-txt row-5">
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
     <style> .row-6 { animation: showRow_6 10.0s ease-out infinite; } </style>
-    <text x="185" y="72.5" class="row-5">%#*#*-#%:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;-#**#*-#%+=*</text>
+</text>
+    <text x="185" y="90.0" class="ascii-row-txt row-6">
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-7 { animation: showRow_7 10.0s ease-out infinite; } </style>
-    <text x="185" y="87.0" class="row-6">#*@@%#%*.&#160;&#160;::::&#160;&#160;&#160;.***#+-##+=*</text>
+</text>
+    <text x="185" y="105.0" class="ascii-row-txt row-7">
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-8 { animation: showRow_8 10.0s ease-out infinite; } </style>
-    <text x="185" y="101.5" class="row-7">*=######*..:=:=-&#160;:&#160;*#*#+:##+=*</text>
+</text>
+    <text x="185" y="120.0" class="ascii-row-txt row-8">
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-9 { animation: showRow_9 10.0s ease-out infinite; } </style>
-    <text x="185" y="116.0" class="row-8">#*+++++++-..=--:.:&#160;****#+%%*+#</text>
+</text>
+    <text x="185" y="135.0" class="ascii-row-txt row-9">
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-10 { animation: showRow_10 10.0s ease-out infinite; } </style>
-    <text x="185" y="130.5" class="row-9">*******%%+&#160;&#160;::&#160;&#160;&#160;&#160;.****####%#%</text>
+</text>
+    <text x="185" y="150.0" class="ascii-row-txt row-10">
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-11 { animation: showRow_11 10.0s ease-out infinite; } </style>
-    <text x="185" y="145.0" class="row-10">+*****#@@#+-.&#160;.=+*+-++##++##**</text>
+</text>
+    <text x="185" y="165.0" class="ascii-row-txt row-11">
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-12 { animation: showRow_12 10.0s ease-out infinite; } </style>
-    <text x="185" y="159.5" class="row-11">+++++#%%%%#+.&#160;.-#**#++++=-+=-+</text>
+</text>
+    <text x="185" y="180.0" class="ascii-row-txt row-12">
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-13 { animation: showRow_13 10.0s ease-out infinite; } </style>
-    <text x="185" y="174.0" class="row-12">=====#@@@%%:&#160;&#160;-+++*%@@%*=*=:.+</text>
+</text>
+    <text x="185" y="195.0" class="ascii-row-txt row-13">
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-14 { animation: showRow_14 10.0s ease-out infinite; } </style>
-    <text x="185" y="188.5" class="row-13">:=++*%%%%@#:.-**+=*#%%@%**++=*</text>
+</text>
+    <text x="185" y="210.0" class="ascii-row-txt row-14">
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
     <style> .row-15 { animation: showRow_15 10.0s ease-out infinite; } </style>
-    <text x="185" y="203.0" class="row-14">.:-=+++==+=::=+++-=#@%%@#**=-#</text>
+</text>
+    <text x="185" y="225.0" class="ascii-row-txt row-15">
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
     <style> .row-16 { animation: showRow_16 10.0s ease-out infinite; } </style>
-    <text x="185" y="217.5" class="row-15">.:.&#160;&#160;&#160;&#160;&#160;&#160;&#160;::-=+#+::#@%%@#+=+#%</text>
+</text>
+    <text x="185" y="240.0" class="ascii-row-txt row-16">
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">&#160;</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#26a641">.</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">%</tspan>
     <style> .row-17 { animation: showRow_17 10.0s ease-out infinite; } </style>
-    <text x="185" y="232.0" class="row-16">&#160;.:==-:::::-==*#*==@%%@@%+=*+#</text>
+</text>
+    <text x="185" y="255.0" class="ascii-row-txt row-17">
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#26a641">:</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
     <style> .row-18 { animation: showRow_18 10.0s ease-out infinite; } </style>
-    <text x="185" y="246.5" class="row-17">&#160;&#160;.:%@@@@*-=+=*#*=+%%%%@%:++.+</text>
-    <text x="185" y="261.0" class="row-18">=+++%%%%%:-++-###++#%%%@%*%%#%</text>
+</text>
+    <text x="185" y="270.0" class="ascii-row-txt row-18">
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#3fb950">-</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">=</tspan>
+<tspan fill="#3fb950">+</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">@</tspan>
+<tspan fill="#7ee787">#</tspan>
+<tspan fill="#3fb950">*</tspan>
+<tspan fill="#7ee787">%</tspan>
+<tspan fill="#7ee787">%</tspan>
+</text>
   </g>
   <g transform="translate(14, 95)">
     <rect x="0" y="0" width="342" height="12" fill="url(#laserGrad)" class="laser-beam" />
   </g>
-  <rect x="12" y="90" width="346" height="315" fill="url(#scanlines)" pointer-events="none" />
+  <rect x="12" y="90" width="346" height="318" fill="url(#scanlines)" pointer-events="none" />
   <line x1="10" y1="412" x2="360" y2="412" stroke="#21262d" stroke-width="1" />
-  <g transform="translate(18, 430)">
-    <text x="0" y="0" class="footer-txt">STATUS: <tspan class="status-online">ONLINE</tspan></text>
-    <text x="140" y="0" class="footer-txt">FACE FOCUS: 100%</text>
-    <rect x="250" y="-9" width="7" height="11" class="blink-cursor" />
+  <g class="footer-group" transform="translate(18, 430)">
+    <text x="0" y="0" class="footer-txt">PORTRAIT_RENDERED <tspan class="status-online">✓</tspan></text>
+    <text x="170" y="0" class="footer-txt">100% COMPLETE</text>
+    <rect x="275" y="-9" width="7" height="11" class="blink-cursor" />
   </g>
 </g>
 </svg>
