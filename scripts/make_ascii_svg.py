@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 make_ascii_svg.py
-Redesigns ascii-portrait.svg into a large, highly recognizable animated terminal portrait:
+Redesigns ascii-portrait.svg with perfect face recognizability and layout fit:
 - Generates ASCII directly from IMG_9746.JPG.jpeg using tight face & headshot crop
-- Uses controlled density ramp: " .:-=+*#%@"
-- Character multi-color shading (dark: #26a641, mid: #3fb950, bright: #7ee787)
-- Large portrait filling ~75-80% of usable terminal width & height
+- Uses dark-hair to dense symbol / light-skin to mid symbol mapping ('@%#*+=-:. ')
+- Character multi-color shading (dark hair/beard: #7ee787, skin/face: #3fb950, bg: #26a641)
+- Fits 100% inside terminal borders without overflow (width=34, font-size=9.5px, x=185 centered)
 - 6-Phase Terminal Animation Loop (10s continuous cycle):
   Phase 1: Startup & Command Typing ($ ./render_portrait.sh)
   Phase 2: Loading Sequence & Progress Bar ([████████████████] 100%)
@@ -23,11 +23,11 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 PREPROCESSED_PHOTO = os.path.join(DATA_DIR, "preprocessed_photo.png")
 OUTPUT_SVG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ascii-portrait.svg")
 
-# Exact character ramp specified in prompt
-DENSITY_RAMP = " .:-=+*#%@"
+# Density ramp tuned for dark hair / light skin contrast
+DENSITY_RAMP = "@%#*+=-:. "
 
 
-def generate_ascii_grid_from_photo(photo_path, ascii_width=30):
+def generate_ascii_grid_from_photo(photo_path, ascii_width=34):
     if not os.path.exists(photo_path):
         return None
 
@@ -37,16 +37,16 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=30):
 
         # Tight Face, Hair, Beard & Shoulder Crop Focus from IMG_9746.JPG.jpeg
         if 0.8 <= (w / float(h)) <= 1.2:
-            left = int(w * 0.35)
-            top = int(h * 0.22)
-            right = int(w * 0.65)
-            bottom = int(h * 0.60)
+            left = int(w * 0.36)
+            top = int(h * 0.23)
+            right = int(w * 0.64)
+            bottom = int(h * 0.58)
             img = img.crop((left, top, right, bottom))
 
-        # Convert to grayscale & optimize contrast for crisp facial features
+        # Convert to grayscale & optimize contrast for crisp face/hair contrast
         gray = img.convert("L")
         enhancer = ImageEnhance.Contrast(gray)
-        enhanced = enhancer.enhance(2.3)
+        enhanced = enhancer.enhance(2.2)
 
         # Aspect ratio compensation for monospace character height (~0.52 ratio)
         w_percent = ascii_width / float(enhanced.size[0])
@@ -66,13 +66,13 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=30):
                 char_idx = int((p / 255.0) * (ramp_len - 1))
                 char_val = DENSITY_RAMP[char_idx]
                 
-                # Determine color tier based on character density for visual depth
+                # Shading colors: dense hair/beard (#7ee787 highlight green), face/skin (#3fb950), bg (#26a641)
                 if char_idx <= 2:
-                    color = "#26a641"  # Dark / shadow tier
+                    color = "#7ee787"  # Dense hair, eyes, beard
                 elif char_idx <= 6:
-                    color = "#3fb950"  # Midtone tier
+                    color = "#3fb950"  # Face, skin tone, features
                 else:
-                    color = "#7ee787"  # Highlight tier (smile, forehead, collar)
+                    color = "#26a641"  # Muted background / subtle dots
                     
                 line_cells.append({"char": char_val, "color": color})
             lines.append(line_cells)
@@ -183,13 +183,13 @@ def generate_redesigned_animated_svg(ascii_lines):
         .progress-bg {{ fill: #161b22; rx: 3px; ry: 3px; }}
         .progress-bar {{ fill: #3fb950; rx: 3px; ry: 3px; animation: progressStep {total_loop_time}s ease-out infinite; }}
         
-        /* Centered Large ASCII Face Grid (occupies ~75-80% usable terminal space) */
+        /* Perfectly Centered ASCII Face Grid (fits 100% inside terminal borders) */
         .ascii-row-txt {{
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 12.5px;
+            font-size: 9.5px;
             font-weight: bold;
             white-space: pre;
-            letter-spacing: 1.4px;
+            letter-spacing: 0.1px;
             text-anchor: middle;
         }}
         .laser-beam {{
@@ -240,7 +240,7 @@ def generate_redesigned_animated_svg(ascii_lines):
     step_delay = 2.2 / max(num_rows, 1)
 
     for i, line_cells in enumerate(ascii_lines):
-        y_pos = i * 15.0
+        y_pos = i * 13.5
         row_delay = round(2.0 + (i * step_delay), 2)
         
         # Row visibility animation
@@ -256,7 +256,7 @@ def generate_redesigned_animated_svg(ascii_lines):
         '''
         svg_lines.insert(len(svg_lines) - 1, f'    <style> .row-{i} {{ animation: showRow_{i} {total_loop_time}s ease-out infinite; }} </style>')
         
-        # Render row text with multi-color character tspans
+        # Render row text with multi-color character tspans centered at x=185
         svg_lines.append(f'    <text x="185" y="{y_pos}" class="ascii-row-txt row-{i}">')
         for cell in line_cells:
             char_val = cell["char"]
@@ -299,8 +299,8 @@ def main():
         print("[ERROR] Could not find source photo (IMG_9746.JPG.jpeg).")
         sys.exit(1)
 
-    print(f"[INFO] Generating redesigned large ASCII portrait from: {raw_photo}")
-    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=30)
+    print(f"[INFO] Generating perfectly fitted & face-focused ASCII portrait from: {raw_photo}")
+    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=34)
 
     if not ascii_lines:
         print("[ERROR] ASCII conversion failed.")
@@ -311,7 +311,7 @@ def main():
     with open(OUTPUT_SVG, "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print(f"[SUCCESS] Redesigned ASCII portrait SVG generated at: {OUTPUT_SVG}")
+    print(f"[SUCCESS] Perfectly fitted ASCII portrait SVG generated at: {OUTPUT_SVG}")
 
 
 if __name__ == "__main__":
