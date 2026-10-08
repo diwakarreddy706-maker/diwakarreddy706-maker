@@ -14,7 +14,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
-DEFAULT_USERNAME = "diwakarrreddy706-maker"
+DEFAULT_USERNAME = "diwakarreddy706-maker"
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 OUTPUT_FILE = os.path.join(DATA_DIR, "contributions.json")
 
