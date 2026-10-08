@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 450" width="490" height="450">
+<defs>
+<style>
+
+            @keyframes rowSlide {
+                0% { opacity: 0; transform: translateX(-10px); }
+                100% { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes headerSlide {
+                0% { opacity: 0; transform: translateY(-6px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+            .anim-header { animation: headerSlide 0.4s ease-out forwards; opacity: 0; }
+            .anim-row { animation: rowSlide 0.35s ease-out forwards; opacity: 0; }
+        
+
+        .bg { fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }
+        .dot-red { fill: #ff5f56; }
+        .dot-yellow { fill: #ffbd2e; }
+        .dot-green { fill: #27c93f; }
+        .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
+        .prompt-user { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; fill: #58a6ff; font-weight: bold; }
+        .prompt-at { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; fill: #8b949e; }
+        .prompt-host { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; fill: #3fb950; font-weight: bold; }
+        .divider { stroke: #30363d; stroke-width: 1px; stroke-dasharray: 4; }
+        .key-label { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
+        .key-bullet { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #58a6ff; font-weight: bold; }
+        .val-text { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; font-weight: 500; }
+    
+</style>
+</defs>
+<rect width="490" height="450" class="bg" />
+<g class="anim-header" style="animation-delay: 0.05s;">
+  <circle cx="20" cy="22" r="5" class="dot-red" />
+  <circle cx="35" cy="22" r="5" class="dot-yellow" />
+  <circle cx="50" cy="22" r="5" class="dot-green" />
+  <text x="65" y="26" class="term-title">diwakarr@github: ~/neofetch</text>
+</g>
+<line x1="12" y1="38" x2="478" y2="38" stroke="#21262d" stroke-width="1" />
+<g class="anim-header" style="animation-delay: 0.1s;">
+  <text x="24" y="66">
+    <tspan class="prompt-user">diwakarrreddy706-maker</tspan>
+    <tspan class="prompt-at">@</tspan>
+    <tspan class="prompt-host">github</tspan>
+  </text>
+  <line x1="24" y1="78" x2="466" y2="78" class="divider" />
+</g>
+<g class="anim-row" style="animation-delay: 0.15s;">
+  <text x="24" y="108">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">OS        </tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#79c0ff">GitHub Profile / Web Stack v2.4</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.21s;">
+  <text x="24" y="144">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">Host      </tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#7ee787">diwakarrreddy706-maker</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.27s;">
+  <text x="24" y="180">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">Role      </tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#ffa657">Frontend Developer / UI/UX</tspan>
+  </text>
+  <text x="145" y="196">
+    <tspan class="val-text" fill="#ffa657">Developer</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.33s;">
+  <text x="24" y="216">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">Focus     </tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#d2a8ff">Frontend Development, UI/UX and</tspan>
+  </text>
+  <text x="145" y="232">
+    <tspan class="val-text" fill="#d2a8ff">Web Projects</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.39s;">
+  <text x="24" y="252">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">Tech Stack</tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#ff7b72">HTML, CSS, JavaScript, Java,</tspan>
+  </text>
+  <text x="145" y="268">
+    <tspan class="val-text" fill="#ff7b72">SQL, Figma</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.45s;">
+  <text x="24" y="288">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">Projects  </tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#a5d6ff">EduNova, SentinelJob AI, CRS</tspan>
+  </text>
+  <text x="145" y="304">
+    <tspan class="val-text" fill="#a5d6ff">Online Services</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.51s;">
+  <text x="24" y="324">
+    <tspan class="key-bullet">❯ </tspan>
+    <tspan class="key-label">Status    </tspan>
+    <tspan class="prompt-at">: </tspan>
+    <tspan class="val-text" fill="#56d364">Active &amp; Ready for Collaborations</tspan>
+  </text>
+</g>
+<g class="anim-row" style="animation-delay: 0.57s;">
+  <line x1="24" y1="378" x2="466" y2="378" class="divider" />
+  <rect x="24" y="398" width="20" height="12" rx="3" fill="#484f58" />
+  <rect x="50" y="398" width="20" height="12" rx="3" fill="#ff7b72" />
+  <rect x="76" y="398" width="20" height="12" rx="3" fill="#3fb950" />
+  <rect x="102" y="398" width="20" height="12" rx="3" fill="#d29922" />
+  <rect x="128" y="398" width="20" height="12" rx="3" fill="#58a6ff" />
+  <rect x="154" y="398" width="20" height="12" rx="3" fill="#bc8cff" />
+  <rect x="180" y="398" width="20" height="12" rx="3" fill="#39c5cf" />
+  <rect x="206" y="398" width="20" height="12" rx="3" fill="#b1bac4" />
+  <rect x="24" y="414" width="20" height="12" rx="3" fill="#484f58" opacity="0.6" />
+  <rect x="50" y="414" width="20" height="12" rx="3" fill="#ff7b72" opacity="0.6" />
+  <rect x="76" y="414" width="20" height="12" rx="3" fill="#3fb950" opacity="0.6" />
+  <rect x="102" y="414" width="20" height="12" rx="3" fill="#d29922" opacity="0.6" />
+  <rect x="128" y="414" width="20" height="12" rx="3" fill="#58a6ff" opacity="0.6" />
+  <rect x="154" y="414" width="20" height="12" rx="3" fill="#bc8cff" opacity="0.6" />
+  <rect x="180" y="414" width="20" height="12" rx="3" fill="#39c5cf" opacity="0.6" />
+  <rect x="206" y="414" width="20" height="12" rx="3" fill="#b1bac4" opacity="0.6" />
+</g>
+</svg>
