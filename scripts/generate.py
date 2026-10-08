@@ -286,17 +286,12 @@ def generate_heatmap_svg(data):
 
     svg_lines.append(f'<rect width="{svg_width}" height="{svg_height}" class="bg" />')
 
-    # Header Bar
+    # Header Bar matching img2.mp4
     svg_lines.append('<g>')
-    svg_lines.append('  <circle cx="24" cy="24" r="5" class="dot-red" />')
-    svg_lines.append('  <circle cx="39" cy="24" r="5" class="dot-yellow" />')
-    svg_lines.append('  <circle cx="54" cy="24" r="5" class="dot-green" />')
-    svg_lines.append('  <text x="70" y="28" class="term-title">diwakar@github:~ $ ./contributions.sh</text>')
-    
-    stats_x = 440
-    svg_lines.append(f'  <text x="{stats_x}" y="28" class="stat-label">Contributions: <tspan class="stat-val">{total_contribs}</tspan></text>')
-    svg_lines.append(f'  <text x="{stats_x + 130}" y="28" class="stat-label">Streak: <tspan class="stat-val">{current_streak}d</tspan></text>')
-    svg_lines.append(f'  <text x="{stats_x + 220}" y="28" class="stat-label">Max Streak: <tspan class="stat-val">{longest_streak}d</tspan></text>')
+    svg_lines.append('  <circle cx="20" cy="20" r="4.5" class="dot-red" />')
+    svg_lines.append('  <circle cx="34" cy="20" r="4.5" class="dot-yellow" />')
+    svg_lines.append('  <circle cx="48" cy="20" r="4.5" class="dot-green" />')
+    svg_lines.append('  <text x="62" y="24" class="term-title">diwakar@github: ~$ ./contributions.sh</text>')
     svg_lines.append('</g>')
 
     svg_lines.append('<line x1="15" y1="42" x2="845" y2="42" stroke="#21262d" stroke-width="1" />')
@@ -334,156 +329,148 @@ def generate_heatmap_svg(data):
 
 
 def generate_stats_svg(data):
-    svg_width = 490
-    svg_height = 490
+    W, H = 840, 880
+    PAD = 20
+    TITLEBAR_H = 30
+    COLS, ROWS = 2, 3
+    GAP = 16
+    TILE_W = (W - PAD * 2 - GAP * (COLS - 1)) / COLS
+    TILE_H = 150
+    TILES_TOP = TITLEBAR_H + PAD + 4
+    CHART_TOP = TILES_TOP + ROWS * TILE_H + (ROWS - 1) * GAP + GAP
 
-    total_contribs = data.get("total_contributions", 127)
-    current_streak = data.get("current_streak", 1)
-    longest_streak = data.get("longest_streak", 5)
+    total_contribs = data.get("total_contributions", 142)
+    cur = data.get("current_streak", 1)
+    cur_len = cur.get("length", 1) if isinstance(cur, dict) else cur
+    cur_span = f"{cur.get('start', 'Oct 8')} – {cur.get('end', 'Oct 8')}" if isinstance(cur, dict) else "Oct 8 – Oct 8"
+
+    lng = data.get("longest_streak", 5)
+    lng_len = lng.get("length", 5) if isinstance(lng, dict) else lng
+    lng_span = f"{lng.get('start', 'Sep 28')} – {lng.get('end', 'Oct 2')}" if isinstance(lng, dict) else "Sep 28 – Oct 2"
+
     days = data.get("days", [])
-
+    n_days = max(len(days), 365)
     active_days = sum(1 for d in days if d.get("count", 0) > 0) or 18
-    pct_year = round((active_days / 365.0) * 100)
+    pct_year = round((active_days / float(n_days)) * 100)
     avg_per_active = round(total_contribs / max(active_days, 1), 1)
 
-    best_day_info = data.get("best_day", {"date": "Sep 28", "count": 45})
-    best_count = best_day_info.get("count", 45) if isinstance(best_day_info, dict) else 45
-    best_date = best_day_info.get("date", "Sep 28") if isinstance(best_day_info, dict) else "Sep 28"
+    best_day_info = data.get("best_day", {"date": "2026-10-08", "count": 31})
+    best_count = best_day_info.get("count", 31) if isinstance(best_day_info, dict) else 31
+    best_date = best_day_info.get("date", "Oct 8") if isinstance(best_day_info, dict) else "Oct 8"
 
     monthly_totals = data.get("monthly_totals", {})
     recent_months = list(monthly_totals.items())[-12:] if monthly_totals else []
 
-    peak_month = "-"
-    peak_val = -1
-    for mname, count in recent_months:
-        if count > peak_val:
-            peak_val = count
-            peak_month = mname.split()[0]
+    BG = "#0d1117"
+    BG2 = "#111722"
+    TILE = "#161b22"
+    FRAME = "#30363d"
+    MUTED = "#7d8590"
+    INK = "#e6edf3"
+    GREEN = "#39d353"
+    BAR = "#26a641"
 
-    svg_lines = []
-    svg_lines.append('<?xml version="1.0" encoding="UTF-8"?>')
-    svg_lines.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">')
-    svg_lines.append('<defs>')
-    svg_lines.append('<style>')
-    svg_lines.append('''
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(6px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .bg { fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }
-        .dot-red { fill: #ff5f56; }
-        .dot-yellow { fill: #ffbd2e; }
-        .dot-green { fill: #27c93f; }
-        .term-title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
-        
-        .metric-box { fill: #161b22; rx: 6px; ry: 6px; stroke: #21262d; stroke-width: 1px; }
-        .metric-lbl { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
-        .metric-val-green { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 17px; fill: #3fb950; font-weight: bold; }
-        .metric-val-white { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 17px; fill: #e6edf3; font-weight: bold; }
-        .metric-sub { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; fill: #6e7681; }
-        
-        .chart-lbl { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #8b949e; }
-        .peak-lbl { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #3fb950; font-weight: bold; }
-        .bar-bg { fill: #161b22; rx: 2px; ry: 2px; }
-        .bar-fill { fill: #26a641; rx: 2px; ry: 2px; }
-        .bar-fill-peak { fill: #39d353; rx: 2px; ry: 2px; }
-        .bar-fill:hover { fill: #39d353; }
-        .month-lbl { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; fill: #6e7681; text-anchor: middle; }
-        
-        .anim-group { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
-    ''')
-    svg_lines.append('</style>')
-    svg_lines.append('</defs>')
+    TILE_STAGGER = 0.15
+    SLIDE_DUR = 0.45
+    COUNT_DUR = 1.2
+    FRAMES = 16
+    BAR_START = TILE_STAGGER * COLS * ROWS + 0.4
+    BAR_STAGGER = 0.06
+    BAR_DUR = 0.6
 
-    svg_lines.append(f'<rect width="{svg_width}" height="{svg_height}" class="bg" />')
+    tiles = [
+        ("current streak", cur_len, " days", cur_span, GREEN),
+        ("longest streak", lng_len, " days", lng_span, INK),
+        ("contributions", total_contribs, "", "in the last year", INK),
+        ("active days", active_days, f" / {n_days}", f"{pct_year}% of the year", INK),
+        ("best day", best_count, "", str(best_date), INK),
+        ("avg / active day", avg_per_active, "", "contributions", INK),
+    ]
 
-    # Header Bar: diwakar@github: ~/stats.sh
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.1s;">')
-    svg_lines.append('  <circle cx="20" cy="20" r="4.5" class="dot-red" />')
-    svg_lines.append('  <circle cx="34" cy="20" r="4.5" class="dot-yellow" />')
-    svg_lines.append('  <circle cx="48" cy="20" r="4.5" class="dot-green" />')
-    svg_lines.append('  <text x="62" y="24" class="term-title">diwakar@github: ~/stats.sh</text>')
-    svg_lines.append('</g>')
+    def fmt(v, like):
+        return f"{v:,.1f}" if isinstance(like, float) else f"{int(round(v)):,}"
 
-    svg_lines.append('<line x1="10" y1="36" x2="480" y2="36" stroke="#21262d" stroke-width="1" />')
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
+        f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">',
+        '<style>',
+        f'.t{{opacity:0;animation:in {SLIDE_DUR}s ease-out both}}',
+        '@keyframes in{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}',
+        f'.b{{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:grow {BAR_DUR}s ease-out both}}',
+        '@keyframes grow{to{transform:scaleY(1)}}',
+        '@media (prefers-reduced-motion: reduce){.t,.b{opacity:1!important;transform:none!important;animation:none!important}}',
+        '</style>',
+        f'<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">',
+        f'<stop offset="0" stop-color="{BG2}"/><stop offset="1" stop-color="{BG}"/></linearGradient></defs>',
+        f'<rect width="{W}" height="{H}" rx="12" fill="url(#bg)"/>',
+        f'<rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="12" fill="none" stroke="{FRAME}"/>',
+        f'<line x1="0" y1="{TITLEBAR_H}" x2="{W}" y2="{TITLEBAR_H}" stroke="{FRAME}"/>',
+    ]
+    for i, dot in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]):
+        parts.append(f'<circle cx="{PAD + i*16}" cy="{TITLEBAR_H/2}" r="5" fill="{dot}"/>')
+    parts.append(f'<text x="{W/2}" y="{TITLEBAR_H/2 + 4}" fill="{MUTED}" font-size="12" '
+                 f'text-anchor="middle">diwakar@github: ~$ ./stats.sh</text>')
 
-    box_w = 215
-    box_h = 58
+    for i, (label, value, suffix, caption, accent) in enumerate(tiles):
+        col, row = i % COLS, i // COLS
+        x = PAD + col * (TILE_W + GAP)
+        y = TILES_TOP + row * (TILE_H + GAP)
+        start = i * TILE_STAGGER
+        count_start = start + SLIDE_DUR * 0.6
 
-    # Row 1: Current Streak & Longest Streak
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.15s;">')
-    svg_lines.append(f'  <rect x="20" y="48" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="32" y="64" class="metric-lbl">$ current streak</text>')
-    svg_lines.append(f'  <text x="32" y="84" class="metric-val-green">{current_streak} <tspan class="metric-lbl">days</tspan></text>')
-    svg_lines.append('  <text x="32" y="97" class="metric-sub">Active GitHub streak</text>')
-    svg_lines.append('</g>')
+        parts.append(f'<g class="t" style="animation-delay:{start:.2f}s">')
+        parts.append(f'<rect x="{x:.1f}" y="{y}" width="{TILE_W:.1f}" height="{TILE_H}" rx="10" '
+                     f'fill="{TILE}" stroke="{FRAME}"/>')
+        parts.append(f'<text x="{x+24:.1f}" y="{y+40}" fill="{MUTED}" font-size="22">$ {label}</text>')
 
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.2s;">')
-    svg_lines.append(f'  <rect x="255" y="48" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="267" y="64" class="metric-lbl">$ longest streak</text>')
-    svg_lines.append(f'  <text x="267" y="84" class="metric-val-white">{longest_streak} <tspan class="metric-lbl">days</tspan></text>')
-    svg_lines.append('  <text x="267" y="97" class="metric-sub">Max consecutive streak</text>')
-    svg_lines.append('</g>')
+        num_y = y + 100
+        for k in range(1, FRAMES + 1):
+            p = k / float(FRAMES)
+            v = value * (1.0 - (1.0 - p) ** 3)
+            t_on = count_start + COUNT_DUR * (k - 1) / float(FRAMES)
+            t_off = count_start + COUNT_DUR * k / float(FRAMES)
+            anim = f'<set attributeName="opacity" to="1" begin="{t_on:.3f}s"/>'
+            if k < FRAMES:
+                anim += f'<set attributeName="opacity" to="0" begin="{t_off:.3f}s"/>'
+            parts.append(
+                f'<text x="{x+24:.1f}" y="{num_y}" opacity="0" font-size="54" font-weight="700" fill="{accent}">'
+                f'{fmt(v, value)}<tspan font-size="24" font-weight="400" fill="{MUTED}">{suffix}</tspan>'
+                f'{anim}</text>'
+            )
+        parts.append(f'<text x="{x+24:.1f}" y="{y+132}" fill="{MUTED}" font-size="20">{caption}</text>')
+        parts.append('</g>')
 
-    # Row 2: Contributions & Active Days
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.25s;">')
-    svg_lines.append(f'  <rect x="20" y="114" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="32" y="130" class="metric-lbl">$ contributions</text>')
-    svg_lines.append(f'  <text x="32" y="150" class="metric-val-white">{total_contribs}</text>')
-    svg_lines.append('  <text x="32" y="163" class="metric-sub">in the last year</text>')
-    svg_lines.append('</g>')
+    chart_x, chart_w = PAD, W - PAD * 2
+    chart_h = H - PAD - CHART_TOP
+    parts.append(f'<g class="t" style="animation-delay:{BAR_START - 0.3:.2f}s">')
+    parts.append(f'<rect x="{chart_x}" y="{CHART_TOP}" width="{chart_w}" height="{chart_h}" rx="10" '
+                 f'fill="{TILE}" stroke="{FRAME}"/>')
+    parts.append(f'<text x="{chart_x+24}" y="{CHART_TOP+40}" fill="{MUTED}" font-size="22">$ contributions / month</text>')
+    parts.append('</g>')
 
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.3s;">')
-    svg_lines.append(f'  <rect x="255" y="114" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="267" y="130" class="metric-lbl">$ active days</text>')
-    svg_lines.append(f'  <text x="267" y="150" class="metric-val-white">{active_days} <tspan class="metric-sub">/ 365</tspan></text>')
-    svg_lines.append(f'  <text x="267" y="163" class="metric-sub">{pct_year}% of the year</text>')
-    svg_lines.append('</g>')
+    plot_top = CHART_TOP + 64
+    plot_bot = CHART_TOP + chart_h - 40
+    plot_l, plot_r = chart_x + 24, chart_x + chart_w - 24
+    slot = (plot_r - plot_l) / max(len(recent_months), 1)
+    bar_w = slot * 0.62
+    peak = max([v for _, v in recent_months] + [1])
 
-    # Row 3: Best Day & Avg / Active Day
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.35s;">')
-    svg_lines.append(f'  <rect x="20" y="180" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="32" y="196" class="metric-lbl">$ best day</text>')
-    svg_lines.append(f'  <text x="32" y="216" class="metric-val-white">{best_count}</text>')
-    svg_lines.append(f'  <text x="32" y="229" class="metric-sub">{best_date}</text>')
-    svg_lines.append('</g>')
+    for i, (mname, count) in enumerate(recent_months):
+        h = max(4, (plot_bot - plot_top) * count / float(peak))
+        bx = plot_l + i * slot + (slot - bar_w) / 2
+        fill = GREEN if (count == peak and count > 0) else BAR
+        delay = BAR_START + i * BAR_STAGGER
+        parts.append(f'<rect class="b" x="{bx:.1f}" y="{plot_bot - h:.1f}" width="{bar_w:.1f}" height="{h:.1f}" '
+                     f'rx="3" fill="{fill}" style="animation-delay:{delay:.2f}s"/>')
+        mon = mname.split()[0][0]
+        parts.append(f'<text x="{bx + bar_w/2:.1f}" y="{plot_bot + 28}" fill="{MUTED}" font-size="18" '
+                     f'text-anchor="middle">{mon}</text>')
+        if count == peak and count > 0:
+            parts.append(f'<text class="t" style="animation-delay:{delay + BAR_DUR:.2f}s" x="{bx + bar_w/2:.1f}" '
+                         f'y="{plot_bot - h - 10:.1f}" fill="{INK}" font-size="18" font-weight="700" text-anchor="middle">{peak:,}</text>')
 
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.4s;">')
-    svg_lines.append(f'  <rect x="255" y="180" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="267" y="196" class="metric-lbl">$ avg / active day</text>')
-    svg_lines.append(f'  <text x="267" y="216" class="metric-val-white">{avg_per_active}</text>')
-    svg_lines.append('  <text x="267" y="229" class="metric-sub">contributions</text>')
-    svg_lines.append('</g>')
-
-    # BOTTOM SECTION: MONTHLY CONTRIBUTION BAR CHART WITH PEAK MONTH
-    svg_lines.append('<g class="anim-group" style="animation-delay: 0.45s;">')
-    svg_lines.append('  <text x="20" y="260" class="chart-lbl">📊 contributions / month</text>')
-    svg_lines.append(f'  <text x="340" y="260" class="peak-lbl">Peak: {peak_month} ({peak_val})</text>')
-    svg_lines.append('  <line x1="20" y1="268" x2="470" y2="268" stroke="#21262d" stroke-width="1" />')
-
-    max_m_val = max([v for _, v in recent_months] + [1])
-    chart_y_base = 450
-    max_bar_h = 150
-    bar_width = 24
-
-    for idx, (mname, count) in enumerate(recent_months):
-        bx = 30 + (idx * (bar_width + 12))
-        fill_h = int((count / max_m_val) * max_bar_h) if max_m_val > 0 else 4
-        fill_h = max(fill_h, 4)
-        by = chart_y_base - fill_h
-
-        m_short = mname.split()[0][0]
-        is_peak = (count == peak_val and count > 0)
-        bar_class = "bar-fill-peak" if is_peak else "bar-fill"
-
-        svg_lines.append(f'  <rect x="{bx}" y="{chart_y_base - max_bar_h}" width="{bar_width}" height="{max_bar_h}" class="bar-bg" />')
-        svg_lines.append(f'  <rect x="{bx}" y="{by}" width="{bar_width}" height="{fill_h}" class="{bar_class}">'
-                         f'<title>{mname}: {count} contributions</title></rect>')
-        svg_lines.append(f'  <text x="{bx + (bar_width//2)}" y="{chart_y_base + 16}" class="month-lbl">{m_short}</text>')
-
-    svg_lines.append('</g>')
-    svg_lines.append('</svg>')
-    return "\n".join(svg_lines)
+    parts.append('</svg>')
+    return "".join(parts)
 
 
 def main():
