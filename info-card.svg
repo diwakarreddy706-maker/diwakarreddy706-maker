@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 450" width="490" height="450">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 490" width="490" height="490">
 <defs>
 <style>
 
@@ -14,9 +14,9 @@
         .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
         
         .metric-box { fill: #161b22; rx: 6px; ry: 6px; stroke: #21262d; stroke-width: 1px; }
-        .metric-icon { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #3fb950; }
         .metric-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 10px; fill: #8b949e; }
-        .metric-val { font-family: 'Fira Code', Consolas, monospace; font-size: 18px; fill: #f0f6fc; font-weight: bold; }
+        .metric-val-green { font-family: 'Fira Code', Consolas, monospace; font-size: 17px; fill: #3fb950; font-weight: bold; }
+        .metric-val-white { font-family: 'Fira Code', Consolas, monospace; font-size: 17px; fill: #f0f6fc; font-weight: bold; }
         .metric-sub { font-family: 'Fira Code', Consolas, monospace; font-size: 9px; fill: #6e7681; }
         
         .chart-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #8b949e; }
@@ -29,76 +29,88 @@
     
 </style>
 </defs>
-<rect width="490" height="450" class="bg" />
+<rect width="490" height="490" class="bg" />
 <g class="anim-group" style="animation-delay: 0.1s;">
   <circle cx="20" cy="20" r="4.5" class="dot-red" />
   <circle cx="34" cy="20" r="4.5" class="dot-yellow" />
   <circle cx="48" cy="20" r="4.5" class="dot-green" />
-  <text x="62" y="24" class="term-title">diwakar@github: ~/stats.asc</text>
+  <text x="62" y="24" class="term-title">diwakar@github: ~$ ./stats.sh</text>
 </g>
 <line x1="10" y1="36" x2="480" y2="36" stroke="#21262d" stroke-width="1" />
 <g class="anim-group" style="animation-delay: 0.15s;">
-  <rect x="20" y="52" width="215" height="75" class="metric-box" />
-  <text x="35" y="70" class="metric-icon">⚡ <tspan class="metric-lbl">Current streak</tspan></text>
-  <text x="35" y="98" class="metric-val">1 <tspan class="metric-lbl">day</tspan></text>
-  <text x="35" y="114" class="metric-sub">Active GitHub streak</text>
+  <rect x="20" y="48" width="215" height="58" class="metric-box" />
+  <text x="32" y="64" class="metric-lbl">$ current streak</text>
+  <text x="32" y="84" class="metric-val-green">1 <tspan class="metric-lbl">days</tspan></text>
+  <text x="32" y="97" class="metric-sub">Oct 8</text>
 </g>
 <g class="anim-group" style="animation-delay: 0.2s;">
-  <rect x="255" y="52" width="215" height="75" class="metric-box" />
-  <text x="270" y="70" class="metric-icon">🔥 <tspan class="metric-lbl">Longest streak</tspan></text>
-  <text x="270" y="98" class="metric-val">5 <tspan class="metric-lbl">days</tspan></text>
-  <text x="270" y="114" class="metric-sub">Max consecutive activity</text>
+  <rect x="255" y="48" width="215" height="58" class="metric-box" />
+  <text x="267" y="64" class="metric-lbl">$ longest streak</text>
+  <text x="267" y="84" class="metric-val-white">5 <tspan class="metric-lbl">days</tspan></text>
+  <text x="267" y="97" class="metric-sub">Sep 28 - Oct 2</text>
 </g>
 <g class="anim-group" style="animation-delay: 0.25s;">
-  <rect x="20" y="140" width="215" height="75" class="metric-box" />
-  <text x="35" y="158" class="metric-icon">📊 <tspan class="metric-lbl">Contributions</tspan></text>
-  <text x="35" y="186" class="metric-val">121</text>
-  <text x="35" y="202" class="metric-sub">Total contributions in year</text>
+  <rect x="20" y="114" width="215" height="58" class="metric-box" />
+  <text x="32" y="130" class="metric-lbl">$ contributions</text>
+  <text x="32" y="150" class="metric-val-white">127</text>
+  <text x="32" y="163" class="metric-sub">in the last year</text>
 </g>
 <g class="anim-group" style="animation-delay: 0.3s;">
-  <rect x="255" y="140" width="215" height="75" class="metric-box" />
-  <text x="270" y="158" class="metric-icon">📈 <tspan class="metric-lbl">1 active day / avg</tspan></text>
-  <text x="270" y="186" class="metric-val">20 <tspan class="metric-sub">/ 6.0 daily</tspan></text>
-  <text x="270" y="202" class="metric-sub">Active coding breakdown</text>
+  <rect x="255" y="114" width="215" height="58" class="metric-box" />
+  <text x="267" y="130" class="metric-lbl">$ active days</text>
+  <text x="267" y="150" class="metric-val-white">20 <tspan class="metric-sub">/ 365</tspan></text>
+  <text x="267" y="163" class="metric-sub">5% of the year</text>
 </g>
 <g class="anim-group" style="animation-delay: 0.35s;">
-  <text x="20" y="245" class="chart-lbl">📊 contributions / month</text>
-  <line x1="20" y1="255" x2="470" y2="255" stroke="#21262d" stroke-width="1" />
-  <rect x="30" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="30" y="406" width="24" height="4" class="bar-fill"><title>Nov 2025: 0 contributions</title></rect>
-  <text x="42" y="426" class="month-lbl">Nov</text>
-  <rect x="66" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="66" y="406" width="24" height="4" class="bar-fill"><title>Dec 2025: 0 contributions</title></rect>
-  <text x="78" y="426" class="month-lbl">Dec</text>
-  <rect x="102" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="102" y="406" width="24" height="4" class="bar-fill"><title>Jan 2026: 0 contributions</title></rect>
-  <text x="114" y="426" class="month-lbl">Jan</text>
-  <rect x="138" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="138" y="406" width="24" height="4" class="bar-fill"><title>Feb 2026: 0 contributions</title></rect>
-  <text x="150" y="426" class="month-lbl">Feb</text>
-  <rect x="174" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="174" y="406" width="24" height="4" class="bar-fill"><title>Mar 2026: 0 contributions</title></rect>
-  <text x="186" y="426" class="month-lbl">Mar</text>
-  <rect x="210" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="210" y="406" width="24" height="4" class="bar-fill"><title>Apr 2026: 0 contributions</title></rect>
-  <text x="222" y="426" class="month-lbl">Apr</text>
-  <rect x="246" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="246" y="406" width="24" height="4" class="bar-fill"><title>May 2026: 0 contributions</title></rect>
-  <text x="258" y="426" class="month-lbl">May</text>
-  <rect x="282" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="282" y="406" width="24" height="4" class="bar-fill"><title>Jun 2026: 0 contributions</title></rect>
-  <text x="294" y="426" class="month-lbl">Jun</text>
-  <rect x="318" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="318" y="406" width="24" height="4" class="bar-fill"><title>Jul 2026: 0 contributions</title></rect>
-  <text x="330" y="426" class="month-lbl">Jul</text>
-  <rect x="354" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="354" y="314" width="24" height="96" class="bar-fill"><title>Aug 2026: 47 contributions</title></rect>
-  <text x="366" y="426" class="month-lbl">Aug</text>
-  <rect x="390" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="390" y="280" width="24" height="130" class="bar-fill"><title>Sep 2026: 63 contributions</title></rect>
-  <text x="402" y="426" class="month-lbl">Sep</text>
-  <rect x="426" y="280" width="24" height="130" class="bar-bg" />
-  <rect x="426" y="390" width="24" height="20" class="bar-fill"><title>Oct 2026: 10 contributions</title></rect>
-  <text x="438" y="426" class="month-lbl">Oct</text>
+  <rect x="20" y="180" width="215" height="58" class="metric-box" />
+  <text x="32" y="196" class="metric-lbl">$ best day</text>
+  <text x="32" y="216" class="metric-val-white">18</text>
+  <text x="32" y="229" class="metric-sub">2026-08-31</text>
+</g>
+<g class="anim-group" style="animation-delay: 0.4s;">
+  <rect x="255" y="180" width="215" height="58" class="metric-box" />
+  <text x="267" y="196" class="metric-lbl">$ avg / active day</text>
+  <text x="267" y="216" class="metric-val-white">6.3</text>
+  <text x="267" y="229" class="metric-sub">contributions</text>
+</g>
+<g class="anim-group" style="animation-delay: 0.45s;">
+  <text x="20" y="260" class="chart-lbl">📊 contributions / month</text>
+  <line x1="20" y1="268" x2="470" y2="268" stroke="#21262d" stroke-width="1" />
+  <rect x="30" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="30" y="446" width="24" height="4" class="bar-fill"><title>Nov 2025: 0 contributions</title></rect>
+  <text x="42" y="466" class="month-lbl">N</text>
+  <rect x="66" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="66" y="446" width="24" height="4" class="bar-fill"><title>Dec 2025: 0 contributions</title></rect>
+  <text x="78" y="466" class="month-lbl">D</text>
+  <rect x="102" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="102" y="446" width="24" height="4" class="bar-fill"><title>Jan 2026: 0 contributions</title></rect>
+  <text x="114" y="466" class="month-lbl">J</text>
+  <rect x="138" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="138" y="446" width="24" height="4" class="bar-fill"><title>Feb 2026: 0 contributions</title></rect>
+  <text x="150" y="466" class="month-lbl">F</text>
+  <rect x="174" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="174" y="446" width="24" height="4" class="bar-fill"><title>Mar 2026: 0 contributions</title></rect>
+  <text x="186" y="466" class="month-lbl">M</text>
+  <rect x="210" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="210" y="446" width="24" height="4" class="bar-fill"><title>Apr 2026: 0 contributions</title></rect>
+  <text x="222" y="466" class="month-lbl">A</text>
+  <rect x="246" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="246" y="446" width="24" height="4" class="bar-fill"><title>May 2026: 0 contributions</title></rect>
+  <text x="258" y="466" class="month-lbl">M</text>
+  <rect x="282" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="282" y="446" width="24" height="4" class="bar-fill"><title>Jun 2026: 0 contributions</title></rect>
+  <text x="294" y="466" class="month-lbl">J</text>
+  <rect x="318" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="318" y="446" width="24" height="4" class="bar-fill"><title>Jul 2026: 0 contributions</title></rect>
+  <text x="330" y="466" class="month-lbl">J</text>
+  <rect x="354" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="354" y="339" width="24" height="111" class="bar-fill"><title>Aug 2026: 47 contributions</title></rect>
+  <text x="366" y="466" class="month-lbl">A</text>
+  <rect x="390" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="390" y="300" width="24" height="150" class="bar-fill"><title>Sep 2026: 63 contributions</title></rect>
+  <text x="402" y="466" class="month-lbl">S</text>
+  <rect x="426" y="300" width="24" height="150" class="bar-bg" />
+  <rect x="426" y="412" width="24" height="38" class="bar-fill"><title>Oct 2026: 16 contributions</title></rect>
+  <text x="438" y="466" class="month-lbl">O</text>
 </g>
 </svg>

@@ -23,6 +23,8 @@
 
 <h3><code>diwakar@github ~ $ ./links.sh</code></h3>
 
+<p><b>Python & AI Engineer &bull; Full-Stack Systems</b></p>
+
 <p>
   <a href="https://github.com/diwakarreddy706-maker"><img src="https://img.shields.io/badge/GITHUB-diwakarreddy706--maker-181717?style=for-the-badge&logo=github&logoColor=white&color=0d1117" alt="GitHub" /></a>
   &nbsp;

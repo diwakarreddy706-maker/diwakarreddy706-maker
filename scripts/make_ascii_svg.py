@@ -80,7 +80,7 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=44):
 
 def generate_redesigned_animated_svg(ascii_lines):
     svg_width = 370
-    svg_height = 450
+    svg_height = 490
     total_loop_time = 10.0  # seconds
 
     svg_lines = []

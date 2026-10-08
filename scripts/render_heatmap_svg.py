@@ -211,6 +211,10 @@ def render_svg(data):
     # Legend at Bottom Right
     leg_y = start_y + (7 * step) + 16
     leg_x = 710
+
+    # Subtitle matching img2.mp4: "121 contributions in the last year"
+    svg_lines.append(f'<text x="42" y="{leg_y + 9}" style="font-family: \'Fira Code\', Consolas, monospace; font-size: 13px; font-weight: bold; fill: #f0f6fc;">{total_contribs} contributions in the last year</text>')
+
     svg_lines.append(f'<text x="{leg_x}" y="{leg_y + 9}" class="legend-text">Less</text>')
     for idx, lvl in enumerate(range(5)):
         bx = leg_x + 30 + (idx * 14)

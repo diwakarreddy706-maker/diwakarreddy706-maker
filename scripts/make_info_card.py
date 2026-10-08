@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """
 make_info_card.py
-Renders a neofetch-style stats & developer card (info-card.svg) matching the exact video reference:
-- Top 4 Metric Boxes: Current streak, Longest streak, Total contributions, Active days & Avg/active day
+Renders a neofetch-style stats & developer card (info-card.svg) matching the exact video reference (img2.mp4):
+- Header: diwakar@github: ~$ ./stats.sh
+- Top Section: 6 Metric Boxes Grid (2x3):
+  1. $ current streak
+  2. $ longest streak
+  3. $ contributions
+  4. $ active days
+  5. $ best day
+  6. $ avg / active day
 - Bottom Section: Contributions / month green bar chart
 - Dark terminal card aesthetic (#0d1117)
 """
@@ -20,28 +27,32 @@ def load_data():
         with open(DATA_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return {
-        "total_contributions": 116,
+        "total_contributions": 121,
         "current_streak": 1,
         "longest_streak": 5,
-        "monthly_totals": {"Jan 2026": 5, "Apr 2026": 2, "Aug 2026": 8, "Sep 2026": 45, "Oct 2026": 56}
+        "monthly_totals": {"Jan 2026": 5, "Apr 2026": 2, "Aug 2026": 8, "Sep 2026": 45, "Oct 2026": 61}
     }
 
 
 def generate_info_card_svg(data):
     svg_width = 490
-    svg_height = 450
+    svg_height = 490
 
-    total_contribs = data.get("total_contributions", 116)
+    total_contribs = data.get("total_contributions", 121)
     current_streak = data.get("current_streak", 1)
     longest_streak = data.get("longest_streak", 5)
     days = data.get("days", [])
 
     active_days = sum(1 for d in days if d.get("count", 0) > 0) or 18
+    pct_year = round((active_days / 365.0) * 100)
     avg_per_active = round(total_contribs / max(active_days, 1), 1)
+
+    best_day_info = data.get("best_day", {"date": "Sep 28", "count": 45})
+    best_count = best_day_info.get("count", 45) if isinstance(best_day_info, dict) else 45
+    best_date = best_day_info.get("date", "Sep 28") if isinstance(best_day_info, dict) else "Sep 28"
 
     # Monthly totals for bottom bar chart
     monthly_totals = data.get("monthly_totals", {})
-    # Take last 12 months or recent months
     recent_months = list(monthly_totals.items())[-12:] if monthly_totals else []
 
     svg_lines = []
@@ -61,9 +72,9 @@ def generate_info_card_svg(data):
         .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
         
         .metric-box { fill: #161b22; rx: 6px; ry: 6px; stroke: #21262d; stroke-width: 1px; }
-        .metric-icon { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #3fb950; }
         .metric-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 10px; fill: #8b949e; }
-        .metric-val { font-family: 'Fira Code', Consolas, monospace; font-size: 18px; fill: #f0f6fc; font-weight: bold; }
+        .metric-val-green { font-family: 'Fira Code', Consolas, monospace; font-size: 17px; fill: #3fb950; font-weight: bold; }
+        .metric-val-white { font-family: 'Fira Code', Consolas, monospace; font-size: 17px; fill: #f0f6fc; font-weight: bold; }
         .metric-sub { font-family: 'Fira Code', Consolas, monospace; font-size: 9px; fill: #6e7681; }
         
         .chart-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #8b949e; }
@@ -80,63 +91,81 @@ def generate_info_card_svg(data):
     # Card Background
     svg_lines.append(f'<rect width="{svg_width}" height="{svg_height}" class="bg" />')
 
-    # Header Bar
+    # Header Bar matching img2.mp4: avi@github: ~$ ./stats.sh
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.1s;">')
     svg_lines.append('  <circle cx="20" cy="20" r="4.5" class="dot-red" />')
     svg_lines.append('  <circle cx="34" cy="20" r="4.5" class="dot-yellow" />')
     svg_lines.append('  <circle cx="48" cy="20" r="4.5" class="dot-green" />')
-    svg_lines.append('  <text x="62" y="24" class="term-title">diwakar@github: ~/stats.asc</text>')
+    svg_lines.append('  <text x="62" y="24" class="term-title">diwakar@github: ~$ ./stats.sh</text>')
     svg_lines.append('</g>')
 
     # Window Divider Line
     svg_lines.append('<line x1="10" y1="36" x2="480" y2="36" stroke="#21262d" stroke-width="1" />')
 
-    # TOP SECTION: 4 METRIC CARDS (Exact match to video stats.svg)
+    # TOP SECTION: 6 METRIC CARDS GRID (Exact 2x3 grid matching img2.mp4)
     box_w = 215
-    box_h = 75
+    box_h = 58
 
+    # Row 1: Box 1 (Current Streak) & Box 2 (Longest Streak)
     # Box 1: Current Streak
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.15s;">')
-    svg_lines.append(f'  <rect x="20" y="52" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="35" y="70" class="metric-icon">⚡ <tspan class="metric-lbl">Current streak</tspan></text>')
-    svg_lines.append(f'  <text x="35" y="98" class="metric-val">{current_streak} <tspan class="metric-lbl">day</tspan></text>')
-    svg_lines.append('  <text x="35" y="114" class="metric-sub">Active GitHub streak</text>')
+    svg_lines.append(f'  <rect x="20" y="48" width="{box_w}" height="{box_h}" class="metric-box" />')
+    svg_lines.append('  <text x="32" y="64" class="metric-lbl">$ current streak</text>')
+    svg_lines.append(f'  <text x="32" y="84" class="metric-val-green">{current_streak} <tspan class="metric-lbl">days</tspan></text>')
+    svg_lines.append('  <text x="32" y="97" class="metric-sub">Oct 8</text>')
     svg_lines.append('</g>')
 
     # Box 2: Longest Streak
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.2s;">')
-    svg_lines.append(f'  <rect x="255" y="52" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="270" y="70" class="metric-icon">🔥 <tspan class="metric-lbl">Longest streak</tspan></text>')
-    svg_lines.append(f'  <text x="270" y="98" class="metric-val">{longest_streak} <tspan class="metric-lbl">days</tspan></text>')
-    svg_lines.append('  <text x="270" y="114" class="metric-sub">Max consecutive activity</text>')
+    svg_lines.append(f'  <rect x="255" y="48" width="{box_w}" height="{box_h}" class="metric-box" />')
+    svg_lines.append('  <text x="267" y="64" class="metric-lbl">$ longest streak</text>')
+    svg_lines.append(f'  <text x="267" y="84" class="metric-val-white">{longest_streak} <tspan class="metric-lbl">days</tspan></text>')
+    svg_lines.append('  <text x="267" y="97" class="metric-sub">Sep 28 - Oct 2</text>')
     svg_lines.append('</g>')
 
+    # Row 2: Box 3 (Contributions) & Box 4 (Active Days)
     # Box 3: Total Contributions
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.25s;">')
-    svg_lines.append(f'  <rect x="20" y="140" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="35" y="158" class="metric-icon">📊 <tspan class="metric-lbl">Contributions</tspan></text>')
-    svg_lines.append(f'  <text x="35" y="186" class="metric-val">{total_contribs}</text>')
-    svg_lines.append('  <text x="35" y="202" class="metric-sub">Total contributions in year</text>')
+    svg_lines.append(f'  <rect x="20" y="114" width="{box_w}" height="{box_h}" class="metric-box" />')
+    svg_lines.append('  <text x="32" y="130" class="metric-lbl">$ contributions</text>')
+    svg_lines.append(f'  <text x="32" y="150" class="metric-val-white">{total_contribs}</text>')
+    svg_lines.append('  <text x="32" y="163" class="metric-sub">in the last year</text>')
     svg_lines.append('</g>')
 
-    # Box 4: Active Days & Avg/Active Day
+    # Box 4: Active Days
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.3s;">')
-    svg_lines.append(f'  <rect x="255" y="140" width="{box_w}" height="{box_h}" class="metric-box" />')
-    svg_lines.append('  <text x="270" y="158" class="metric-icon">📈 <tspan class="metric-lbl">1 active day / avg</tspan></text>')
-    svg_lines.append(f'  <text x="270" y="186" class="metric-val">{active_days} <tspan class="metric-sub">/ {avg_per_active} daily</tspan></text>')
-    svg_lines.append('  <text x="270" y="202" class="metric-sub">Active coding breakdown</text>')
+    svg_lines.append(f'  <rect x="255" y="114" width="{box_w}" height="{box_h}" class="metric-box" />')
+    svg_lines.append('  <text x="267" y="130" class="metric-lbl">$ active days</text>')
+    svg_lines.append(f'  <text x="267" y="150" class="metric-val-white">{active_days} <tspan class="metric-sub">/ 365</tspan></text>')
+    svg_lines.append(f'  <text x="267" y="163" class="metric-sub">{pct_year}% of the year</text>')
     svg_lines.append('</g>')
 
-    # BOTTOM SECTION: MONTHLY CONTRIBUTION BAR CHART (Matching video)
+    # Row 3: Box 5 (Best Day) & Box 6 (Avg / Active Day)
+    # Box 5: Best Day
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.35s;">')
-    svg_lines.append('  <text x="20" y="245" class="chart-lbl">📊 contributions / month</text>')
-    svg_lines.append('  <line x1="20" y1="255" x2="470" y2="255" stroke="#21262d" stroke-width="1" />')
+    svg_lines.append(f'  <rect x="20" y="180" width="{box_w}" height="{box_h}" class="metric-box" />')
+    svg_lines.append('  <text x="32" y="196" class="metric-lbl">$ best day</text>')
+    svg_lines.append(f'  <text x="32" y="216" class="metric-val-white">{best_count}</text>')
+    svg_lines.append(f'  <text x="32" y="229" class="metric-sub">{best_date}</text>')
+    svg_lines.append('</g>')
+
+    # Box 6: Avg / Active Day
+    svg_lines.append('<g class="anim-group" style="animation-delay: 0.4s;">')
+    svg_lines.append(f'  <rect x="255" y="180" width="{box_w}" height="{box_h}" class="metric-box" />')
+    svg_lines.append('  <text x="267" y="196" class="metric-lbl">$ avg / active day</text>')
+    svg_lines.append(f'  <text x="267" y="216" class="metric-val-white">{avg_per_active}</text>')
+    svg_lines.append('  <text x="267" y="229" class="metric-sub">contributions</text>')
+    svg_lines.append('</g>')
+
+    # BOTTOM SECTION: MONTHLY CONTRIBUTION BAR CHART (Matching img2.mp4)
+    svg_lines.append('<g class="anim-group" style="animation-delay: 0.45s;">')
+    svg_lines.append('  <text x="20" y="260" class="chart-lbl">📊 contributions / month</text>')
+    svg_lines.append('  <line x1="20" y1="268" x2="470" y2="268" stroke="#21262d" stroke-width="1" />')
 
     max_m_val = max([v for _, v in recent_months] + [1])
-    chart_y_base = 410
-    max_bar_h = 130
+    chart_y_base = 450
+    max_bar_h = 150
     bar_width = 24
-    spacing = (450 - (len(recent_months) * bar_width)) / max(len(recent_months) + 1, 1)
 
     for idx, (mname, count) in enumerate(recent_months):
         bx = 30 + (idx * (bar_width + 12))
@@ -144,8 +173,8 @@ def generate_info_card_svg(data):
         fill_h = max(fill_h, 4)
         by = chart_y_base - fill_h
         
-        # Short month display (e.g. Jan, Feb)
-        m_short = mname.split()[0]
+        # Month letter/short (e.g. O, N, D, J, F, M, A, M, J, J, A, S, O)
+        m_short = mname.split()[0][0]
         
         svg_lines.append(f'  <rect x="{bx}" y="{chart_y_base - max_bar_h}" width="{bar_width}" height="{max_bar_h}" class="bar-bg" />')
         svg_lines.append(f'  <rect x="{bx}" y="{by}" width="{bar_width}" height="{fill_h}" class="bar-fill">'
