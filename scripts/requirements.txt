@@ -1,9 +1,3 @@
-# Core dependencies required for daily GitHub contribution fetching and rendering
 requests>=2.31.0
-beautifulsoup4>=4.12.0
 pillow>=10.0.0
-
-# Optional dependencies for ASCII portrait generation from custom photos:
-# numpy>=1.24.0
-# opencv-python>=4.8.0
-# rembg>=2.0.50
+beautifulsoup4>=4.12.0
