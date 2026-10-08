@@ -34,26 +34,32 @@
 </g>
 <line x1="12" y1="38" x2="358" y2="38" stroke="#21262d" stroke-width="1" />
 <g class="ascii-text">
-  <text x="18" y="62" class="ascii-row" style="animation-delay: 0.1s;">&#160;&#160;&#160;..&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+c++-``........&#160;&#160;...`:``:```</text>
-  <text x="18" y="76" class="ascii-row" style="animation-delay: 0.135s;">&#160;&#160;..&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;..``::::`....&#160;&#160;..&#160;`:`.&#160;.&#160;.....</text>
-  <text x="18" y="90" class="ascii-row" style="animation-delay: 0.17s;">&#160;&#160;&#160;..&#160;&#160;&#160;&#160;&#160;&#160;&#160;..-+cccsc=:`````:-+==::``:`.&#160;.</text>
-  <text x="18" y="104" class="ascii-row" style="animation-delay: 0.205s;">&#160;..&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;.&#160;&#160;+###%%##*++=-===*c+++====`..</text>
-  <text x="18" y="118" class="ascii-row" style="animation-delay: 0.24s;">`.`.&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;``:+ssss#cc*++cc+++c+==-=-:`.`</text>
-  <text x="18" y="132" class="ascii-row" style="animation-delay: 0.275s;">:``:.&#160;&#160;&#160;&#160;&#160;.`:-:-s##%%%##**cc+=+==--::`:``:</text>
-  <text x="18" y="146" class="ascii-row" style="animation-delay: 0.31s;">.-:...&#160;&#160;&#160;&#160;`-``-**#c-:-s%cc#c+=-+=::..&#160;:`::</text>
-  <text x="18" y="160" class="ascii-row" style="animation-delay: 0.345s;">..`::.&#160;&#160;&#160;````.=###-`=&#160;-%css#c+-=-```--**cc</text>
-  <text x="18" y="174" class="ascii-row" style="animation-delay: 0.38s;">:.&#160;:::...`:=::*ssss-:-+ss##%%#sc=:`:=+scs#</text>
-  <text x="18" y="188" class="ascii-row" style="animation-delay: 0.415s;">.:`..&#160;&#160;&#160;&#160;&#160;&#160;`:=+cs%@*:s##s*c%#**c=::::-*-++</text>
-  <text x="18" y="202" class="ascii-row" style="animation-delay: 0.45s;">&#160;`:.`&#160;&#160;&#160;&#160;&#160;&#160;&#160;.++=*+*+ccc@%cs%s*cs+--:-+*+*+</text>
-  <text x="18" y="216" class="ascii-row" style="animation-delay: 0.485s;">&#160;&#160;..&#160;&#160;&#160;&#160;&#160;&#160;&#160;.`::-*s**sss@%cs#c**#*=:---++++</text>
-  <text x="18" y="230" class="ascii-row" style="animation-delay: 0.52s;">``&#160;..&#160;&#160;&#160;&#160;&#160;&#160;.-=cs%@scs#s%%%%%#*=#+=====*+*=</text>
-  <text x="18" y="244" class="ascii-row" style="animation-delay: 0.555s;">.`&#160;&#160;&#160;`.&#160;&#160;&#160;`=*ss##sc+=scs%%#%%%s#*===+++++=</text>
-  <text x="18" y="258" class="ascii-row" style="animation-delay: 0.59s;">.&#160;&#160;&#160;&#160;:`&#160;.`--+++c*c+:+c#%ss####%%#c+-==*=+=</text>
-  <text x="18" y="272" class="ascii-row" style="animation-delay: 0.625s;">&#160;&#160;.&#160;&#160;&#160;&#160;.::-==+*+=c-&#160;.`-cscs#s###@@#c++*--=</text>
-  <text x="18" y="286" class="ascii-row" style="animation-delay: 0.66s;">&#160;&#160;&#160;&#160;&#160;&#160;.:-=+=-**++*=&#160;..:cscc##%#%%%@@%s*=--</text>
-  <text x="18" y="300" class="ascii-row" style="animation-delay: 0.695s;">&#160;&#160;&#160;&#160;&#160;&#160;.:=+++++=:++-&#160;.`-+ccss###s#%%%%@%s*=</text>
-  <text x="18" y="314" class="ascii-row" style="animation-delay: 0.73s;">&#160;&#160;&#160;&#160;&#160;.:-=-:+++++=+:&#160;``:*ccss*#%%%%%%%@@@%c</text>
-  <text x="18" y="328" class="ascii-row" style="animation-delay: 0.765s;">&#160;&#160;&#160;&#160;.:-=-`=+++*+++-&#160;```*ccssc*#%%%%%%#s%@@</text>
-  <text x="18" y="342" class="ascii-row" style="animation-delay: 0.8s;">&#160;&#160;&#160;&#160;.--`:=+++-=*+=-.``.+**ssss###%%s#%#%%%</text>
+  <text x="18" y="62" class="ascii-row" style="animation-delay: 0.1s;">-:+ssscc********ccc+++-=-=+-``:*c*c*ss-+++</text>
+  <text x="18" y="76" class="ascii-row" style="animation-delay: 0.135s;">..---*sscccccccccc##*=`*cccc+:.+=`*:cs-=--</text>
+  <text x="18" y="90" class="ascii-row" style="animation-delay: 0.17s;">&#160;`&#160;&#160;-+ssssssssssss%%#ss##ss##*-*=-*=++=*=`</text>
+  <text x="18" y="104" class="ascii-row" style="animation-delay: 0.205s;">.=:.c%#sccssssssss#ssssssssss+:*+-*:+-:-+:</text>
+  <text x="18" y="118" class="ascii-row" style="animation-delay: 0.24s;">&#160;&#160;&#160;`-=s##ssssssscsss#ssssssss+:*--*+#s+%*:</text>
+  <text x="18" y="132" class="ascii-row" style="animation-delay: 0.275s;">-*-...=s=ccs*=:`..``-=cssssss+:**c#@%*-*:.</text>
+  <text x="18" y="146" class="ascii-row" style="animation-delay: 0.31s;">-s#*=c*:+#%+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*sccs#+:c@**+s*:+=:</text>
+  <text x="18" y="160" class="ascii-row" style="animation-delay: 0.345s;">:#ss#%s+c%*&#160;&#160;&#160;&#160;&#160;.``&#160;&#160;&#160;&#160;=ccccs+-s%*+=#s=+--</text>
+  <text x="18" y="174" class="ascii-row" style="animation-delay: 0.38s;">.c*s@@@%#%c-&#160;&#160;`-::`.&#160;&#160;&#160;.ccccs=-s%+*-#%##**</text>
+  <text x="18" y="188" class="ascii-row" style="animation-delay: 0.415s;">cc=*ccccccsc``.==-*+.:`.scccc-`s%++-##+%#+</text>
+  <text x="18" y="202" class="ascii-row" style="animation-delay: 0.45s;">sss*******+*:.&#160;-=:::&#160;:.&#160;ccccss*#%cc+%#s%@#</text>
+  <text x="18" y="216" class="ascii-row" style="animation-delay: 0.485s;">**ccc*cccc##+&#160;&#160;`-:&#160;&#160;&#160;&#160;&#160;`ccc*s#ss#%%#%%#%%%</text>
+  <text x="18" y="230" class="ascii-row" style="animation-delay: 0.52s;">+*cc*****#@%c+`&#160;&#160;&#160;&#160;-=+*-=*ccss**ss#+#%c%#s</text>
+  <text x="18" y="244" class="ascii-row" style="animation-delay: 0.555s;">-******c#%%%#sc*.&#160;`=sscc+==+**==c*c=###%#s</text>
+  <text x="18" y="258" class="ascii-row" style="animation-delay: 0.59s;">+*+*++=c@%%%@#+&#160;&#160;&#160;`:**+c%%#s*+--=:-&#160;s#s%c#</text>
+  <text x="18" y="272" class="ascii-row" style="animation-delay: 0.625s;">::-==-+#@@@@%%*...*s+++c#%%@%s=c*:=:##c%s#</text>
+  <text x="18" y="286" class="ascii-row" style="animation-delay: 0.66s;">.`-+cc*s%###%#-`:+*+*+=ss%%@%%***++=%#s%sc</text>
+  <text x="18" y="300" class="ascii-row" style="animation-delay: 0.695s;">````-=+++=-=+=-`-++*+=:*s@%%%@s**+--%#c%c*</text>
+  <text x="18" y="314" class="ascii-row" style="animation-delay: 0.73s;">..``&#160;&#160;.&#160;&#160;&#160;&#160;&#160;&#160;::`==+sc-`:#@%%%%s+==cs%sc@s#</text>
+  <text x="18" y="328" class="ascii-row" style="animation-delay: 0.765s;">.&#160;`:-=-......`:===*#s*:=%%%@@@%*=*cc%#c*-*</text>
+  <text x="18" y="342" class="ascii-row" style="animation-delay: 0.8s;">.&#160;&#160;&#160;.-%%%%%%c==++=csc+-s%%%%%@%:-*:&#160;s#+s--</text>
+  <text x="18" y="356" class="ascii-row" style="animation-delay: 0.835s;">.`-=::#%%%@@-:=*+-sss*-*s#%%%@%:c#c+##c@c+</text>
+  <text x="18" y="370" class="ascii-row" style="animation-delay: 0.87s;">:=*+c%%%%#%s:-*c+-#ss#-c#%%@%%@%%#ss%#s%s*</text>
+  <text x="18" y="384" class="ascii-row" style="animation-delay: 0.905s;">*cs*#%%%s%@::+cc==##s++cc%%#%@%%@%ss%@%%c*</text>
+  <text x="18" y="398" class="ascii-row" style="animation-delay: 0.94s;">s*=%%%%@#%%=`*c*-=#s*+*#ccs##s%%#%%##%@@%s</text>
+  <text x="18" y="412" class="ascii-row" style="animation-delay: 0.975s;">#ss%%%%+c%+++cc*:+cs#c+*ccc**s%%c+####%%@@</text>
+  <text x="18" y="426" class="ascii-row" style="animation-delay: 1.01s;">-c#s###+s#-.+*=:&#160;-**ssc+*++*s##%%c####s##%</text>
 </g>
 </svg>

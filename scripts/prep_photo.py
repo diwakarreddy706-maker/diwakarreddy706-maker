@@ -42,6 +42,16 @@ def preprocess_image(input_path, output_path):
         print("[NOTICE] 'rembg' package not installed. Skipping automatic background removal.")
         print("         To enable background removal, install: pip install rembg")
 
+    # Auto-crop face/headshot for wide or full-body portrait photos if aspect ratio is ~1:1
+    w, h = img.size
+    if 0.8 <= (w / float(h)) <= 1.2:
+        print("[INFO] Applying automatic face/headshot crop focus...")
+        left = int(w * 0.35)
+        top = int(h * 0.22)
+        right = int(w * 0.68)
+        bottom = int(h * 0.65)
+        img = img.crop((left, top, right, bottom))
+
     # Composite subject onto white background
     white_bg = Image.new("RGBA", img.size, (255, 255, 255, 255))
     composited = Image.alpha_composite(white_bg, img).convert("L")
