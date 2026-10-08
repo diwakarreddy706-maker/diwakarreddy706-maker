@@ -1,65 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370 450" width="370" height="450">
 <defs>
+  <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.3" />
+  </pattern>
+  <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#3fb950" stop-opacity="0" />
+    <stop offset="50%" stop-color="#56d364" stop-opacity="0.8" />
+    <stop offset="100%" stop-color="#3fb950" stop-opacity="0" />
+  </linearGradient>
 <style>
 
-        @keyframes printRow {
-            0% { opacity: 0; transform: translateY(-4px); }
+        /* Overall Loop Timeline (10.0s) */
+        @keyframes windowAppear {
+            0% { opacity: 0; transform: scale(0.96); }
+            4% { opacity: 1; transform: scale(1); }
+            92% { opacity: 1; transform: scale(1); }
+            98% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 0; }
+        }
+        @keyframes typeCmd {
+            0% { width: 0ch; opacity: 1; }
+            12% { width: 23ch; opacity: 1; }
+            92% { width: 23ch; opacity: 1; }
+            98% { width: 0ch; opacity: 0; }
+            100% { width: 0ch; opacity: 0; }
+        }
+        @keyframes showLoading {
+            0% { opacity: 0; }
+            14% { opacity: 0; }
+            16% { opacity: 1; }
+            92% { opacity: 1; }
+            98% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes progressFill {
+            0% { width: 0px; }
+            16% { width: 0px; }
+            25% { width: 140px; }
+            92% { width: 140px; }
+            98% { width: 0px; }
+            100% { width: 0px; }
+        }
+        @keyframes printLine {
+            0% { opacity: 0; transform: translateY(-3px); }
             100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes laserSweep {
+            0% { transform: translateY(0px); opacity: 0; }
+            58% { transform: translateY(0px); opacity: 0; }
+            60% { opacity: 0.9; }
+            78% { transform: translateY(310px); opacity: 0.9; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes cursorBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .term-card {
+            animation: windowAppear 10.0s ease-in-out infinite;
+            transform-origin: center;
         }
         .bg { fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }
         .dot-red { fill: #ff5f56; }
         .dot-yellow { fill: #ffbd2e; }
         .dot-green { fill: #27c93f; }
-        .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
+        .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 11.5px; fill: #8b949e; font-weight: 600; }
+        
+        .prompt-txt {
+            font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+            font-size: 11px;
+            fill: #58a6ff;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: typeCmd 10.0s steps(23) infinite;
+        }
+        .loading-box { animation: showLoading 10.0s infinite; }
+        .load-txt { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #8b949e; }
+        .progress-bg { fill: #161b22; rx: 3px; ry: 3px; }
+        .progress-bar { fill: #3fb950; rx: 3px; ry: 3px; animation: progressFill 10.0s ease-out infinite; }
+        
         .ascii-text {
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 10px;
+            font-size: 9.5px;
             fill: #3fb950;
             white-space: pre;
+            letter-spacing: 0.4px;
         }
         .ascii-row {
-            animation: printRow 0.15s ease-out forwards;
             opacity: 0;
+            animation: printLine 0.2s ease-out forwards;
         }
+        .laser-beam {
+            animation: laserSweep 10.0s ease-in-out infinite;
+        }
+        .footer-txt { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #8b949e; }
+        .status-online { fill: #3fb950; font-weight: bold; }
+        .blink-cursor { animation: cursorBlink 0.8s infinite; fill: #3fb950; }
     
 </style>
 </defs>
-<rect width="370" height="450" class="bg" />
-<g>
-  <circle cx="20" cy="22" r="5" class="dot-red" />
-  <circle cx="35" cy="22" r="5" class="dot-yellow" />
-  <circle cx="50" cy="22" r="5" class="dot-green" />
-  <text x="65" y="26" class="term-title">diwakarr@github: ~/portrait.asc</text>
-</g>
-<line x1="12" y1="38" x2="358" y2="38" stroke="#21262d" stroke-width="1" />
-<g class="ascii-text">
-  <text x="18" y="62" class="ascii-row" style="animation-delay: 0.1s;">-:+ssscc********ccc+++-=-=+-``:*c*c*ss-+++</text>
-  <text x="18" y="76" class="ascii-row" style="animation-delay: 0.135s;">..---*sscccccccccc##*=`*cccc+:.+=`*:cs-=--</text>
-  <text x="18" y="90" class="ascii-row" style="animation-delay: 0.17s;">&#160;`&#160;&#160;-+ssssssssssss%%#ss##ss##*-*=-*=++=*=`</text>
-  <text x="18" y="104" class="ascii-row" style="animation-delay: 0.205s;">.=:.c%#sccssssssss#ssssssssss+:*+-*:+-:-+:</text>
-  <text x="18" y="118" class="ascii-row" style="animation-delay: 0.24s;">&#160;&#160;&#160;`-=s##ssssssscsss#ssssssss+:*--*+#s+%*:</text>
-  <text x="18" y="132" class="ascii-row" style="animation-delay: 0.275s;">-*-...=s=ccs*=:`..``-=cssssss+:**c#@%*-*:.</text>
-  <text x="18" y="146" class="ascii-row" style="animation-delay: 0.31s;">-s#*=c*:+#%+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*sccs#+:c@**+s*:+=:</text>
-  <text x="18" y="160" class="ascii-row" style="animation-delay: 0.345s;">:#ss#%s+c%*&#160;&#160;&#160;&#160;&#160;.``&#160;&#160;&#160;&#160;=ccccs+-s%*+=#s=+--</text>
-  <text x="18" y="174" class="ascii-row" style="animation-delay: 0.38s;">.c*s@@@%#%c-&#160;&#160;`-::`.&#160;&#160;&#160;.ccccs=-s%+*-#%##**</text>
-  <text x="18" y="188" class="ascii-row" style="animation-delay: 0.415s;">cc=*ccccccsc``.==-*+.:`.scccc-`s%++-##+%#+</text>
-  <text x="18" y="202" class="ascii-row" style="animation-delay: 0.45s;">sss*******+*:.&#160;-=:::&#160;:.&#160;ccccss*#%cc+%#s%@#</text>
-  <text x="18" y="216" class="ascii-row" style="animation-delay: 0.485s;">**ccc*cccc##+&#160;&#160;`-:&#160;&#160;&#160;&#160;&#160;`ccc*s#ss#%%#%%#%%%</text>
-  <text x="18" y="230" class="ascii-row" style="animation-delay: 0.52s;">+*cc*****#@%c+`&#160;&#160;&#160;&#160;-=+*-=*ccss**ss#+#%c%#s</text>
-  <text x="18" y="244" class="ascii-row" style="animation-delay: 0.555s;">-******c#%%%#sc*.&#160;`=sscc+==+**==c*c=###%#s</text>
-  <text x="18" y="258" class="ascii-row" style="animation-delay: 0.59s;">+*+*++=c@%%%@#+&#160;&#160;&#160;`:**+c%%#s*+--=:-&#160;s#s%c#</text>
-  <text x="18" y="272" class="ascii-row" style="animation-delay: 0.625s;">::-==-+#@@@@%%*...*s+++c#%%@%s=c*:=:##c%s#</text>
-  <text x="18" y="286" class="ascii-row" style="animation-delay: 0.66s;">.`-+cc*s%###%#-`:+*+*+=ss%%@%%***++=%#s%sc</text>
-  <text x="18" y="300" class="ascii-row" style="animation-delay: 0.695s;">````-=+++=-=+=-`-++*+=:*s@%%%@s**+--%#c%c*</text>
-  <text x="18" y="314" class="ascii-row" style="animation-delay: 0.73s;">..``&#160;&#160;.&#160;&#160;&#160;&#160;&#160;&#160;::`==+sc-`:#@%%%%s+==cs%sc@s#</text>
-  <text x="18" y="328" class="ascii-row" style="animation-delay: 0.765s;">.&#160;`:-=-......`:===*#s*:=%%%@@@%*=*cc%#c*-*</text>
-  <text x="18" y="342" class="ascii-row" style="animation-delay: 0.8s;">.&#160;&#160;&#160;.-%%%%%%c==++=csc+-s%%%%%@%:-*:&#160;s#+s--</text>
-  <text x="18" y="356" class="ascii-row" style="animation-delay: 0.835s;">.`-=::#%%%@@-:=*+-sss*-*s#%%%@%:c#c+##c@c+</text>
-  <text x="18" y="370" class="ascii-row" style="animation-delay: 0.87s;">:=*+c%%%%#%s:-*c+-#ss#-c#%%@%%@%%#ss%#s%s*</text>
-  <text x="18" y="384" class="ascii-row" style="animation-delay: 0.905s;">*cs*#%%%s%@::+cc==##s++cc%%#%@%%@%ss%@%%c*</text>
-  <text x="18" y="398" class="ascii-row" style="animation-delay: 0.94s;">s*=%%%%@#%%=`*c*-=#s*+*#ccs##s%%#%%##%@@%s</text>
-  <text x="18" y="412" class="ascii-row" style="animation-delay: 0.975s;">#ss%%%%+c%+++cc*:+cs#c+*ccc**s%%c+####%%@@</text>
-  <text x="18" y="426" class="ascii-row" style="animation-delay: 1.01s;">-c#s###+s#-.+*=:&#160;-**ssc+*++*s##%%c####s##%</text>
+<g class="term-card">
+  <rect width="370" height="450" class="bg" />
+  <g>
+    <circle cx="20" cy="20" r="4.5" class="dot-red" />
+    <circle cx="34" cy="20" r="4.5" class="dot-yellow" />
+    <circle cx="48" cy="20" r="4.5" class="dot-green" />
+    <text x="62" y="24" class="term-title">diwakar@github: ~/portrait.asc</text>
+  </g>
+  <line x1="10" y1="36" x2="360" y2="36" stroke="#21262d" stroke-width="1" />
+  <g transform="translate(18, 54)">
+    <text class="prompt-txt">$ ./render_portrait.sh</text>
+  </g>
+  <g class="loading-box" transform="translate(18, 70)">
+    <text x="0" y="0" class="load-txt">Loading image: IMG_9746.JPG ...</text>
+    <rect x="0" y="8" width="140" height="6" class="progress-bg" />
+    <rect x="0" y="8" width="0" height="6" class="progress-bar" />
+  </g>
+    <style> .row-0 { animation: showRow_0 10.0s ease-out infinite; } </style>
+  <g class="ascii-text" transform="translate(18, 106)">
+    <style> .row-1 { animation: showRow_1 10.0s ease-out infinite; } </style>
+    <text x="0" y="0.0" class="row-0">--+###******+***##+++-=-++-::-*****%=++=</text>
+    <style> .row-2 { animation: showRow_2 10.0s ease-out infinite; } </style>
+    <text x="0" y="11.5" class="row-1">..--=*#######**###%*=:*###*=.:+:+==%=+--</text>
+    <style> .row-3 { animation: showRow_3 10.0s ease-out infinite; } </style>
+    <text x="0" y="23.0" class="row-2">.:&#160;.=*###########%%%##%%##%%==*-++++=+=:</text>
+    <style> .row-4 { animation: showRow_4 10.0s ease-out infinite; } </style>
+    <text x="0" y="34.5" class="row-3">&#160;=::#%%#####################-=*-+-=+-=+-</text>
+    <style> .row-5 { animation: showRow_5 10.0s ease-out infinite; } </style>
+    <text x="0" y="46.0" class="row-4">&#160;&#160;&#160;::=#%####%##**###%#######-=+-**#%+%+:</text>
+    <style> .row-6 { animation: showRow_6 10.0s ease-out infinite; } </style>
+    <text x="0" y="57.5" class="row-5">=#=:.:+++##*-..&#160;&#160;&#160;&#160;.-+######-=*##%%*-+-:</text>
+    <style> .row-7 { animation: showRow_7 10.0s ease-out infinite; } </style>
+    <text x="0" y="69.0" class="row-6">-#%*+#=-#%*&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*#####-=@#+=*#-+=-</text>
+    <style> .row-8 { animation: showRow_8 10.0s ease-out infinite; } </style>
+    <text x="0" y="80.5" class="row-7">:##%%%#*%#.&#160;&#160;&#160;.:::&#160;&#160;&#160;&#160;=#*###=+%*+=*%**==</text>
+    <style> .row-9 { animation: showRow_9 10.0s ease-out infinite; } </style>
+    <text x="0" y="92.0" class="row-8">:*=#%%%%%%#.&#160;.=-:::&#160;&#160;&#160;.#*##*-=@**=#%#%*+</text>
+    <style> .row-10 { animation: showRow_10 10.0s ease-out infinite; } </style>
+    <text x="0" y="103.5" class="row-9">%#+*++***+*=:.-=-+*.=::#*##*-=%*+=*%+%%*</text>
+    <style> .row-11 { animation: showRow_11 10.0s ease-out infinite; } </style>
+    <text x="0" y="115.0" class="row-10">*##********+&#160;&#160;:=-&#160;&#160;&#160;.&#160;.****###@##*%%%@@@</text>
+    <style> .row-12 { animation: showRow_12 10.0s ease-out infinite; } </style>
+    <text x="0" y="126.5" class="row-11">***#*****%%#=&#160;&#160;..&#160;&#160;::--****##**%%##%*%%%</text>
+    <style> .row-13 { animation: showRow_13 10.0s ease-out infinite; } </style>
+    <text x="0" y="138.0" class="row-12">=+******#@@%#+=.&#160;.+*##+-=+*#*+###+*%#%%#</text>
+    <style> .row-14 { animation: showRow_14 10.0s ease-out infinite; } </style>
+    <text x="0" y="149.5" class="row-13">=*+*+++%@%%@%*=&#160;&#160;.:##+%#**+++-==+-+%#@##</text>
+    <style> .row-15 { animation: showRow_15 10.0s ease-out infinite; } </style>
+    <text x="0" y="161.0" class="row-14">===+==+%%%@%%*.&#160;&#160;-++++#%@@%#+=*--.+%*%#%</text>
+    <style> .row-16 { animation: showRow_16 10.0s ease-out infinite; } </style>
+    <text x="0" y="172.5" class="row-15">.:-+++*%@@%%@*::-**+++##%%@@#+#=+=*%*%##</text>
+    <style> .row-17 { animation: showRow_17 10.0s ease-out infinite; } </style>
+    <text x="0" y="184.0" class="row-16">:::-*****++**-.-+++++-*#@%@%%***=-#%#%**</text>
+    <style> .row-18 { animation: showRow_18 10.0s ease-out infinite; } </style>
+    <text x="0" y="195.5" class="row-17">....&#160;.:...&#160;.:=:-=+#+-:=%@%%@%*+=+*%%*@##</text>
+    <style> .row-19 { animation: showRow_19 10.0s ease-out infinite; } </style>
+    <text x="0" y="207.0" class="row-18">..----.&#160;&#160;&#160;&#160;&#160;.:-==+%#+:=@%@@%@*==##%%##+#</text>
+    <style> .row-20 { animation: showRow_20 10.0s ease-out infinite; } </style>
+    <text x="0" y="218.5" class="row-19">.&#160;&#160;.:*%####*==++=*#*+=#@@%%%@*-*+.*%+*--</text>
+    <style> .row-21 { animation: showRow_21 10.0s ease-out infinite; } </style>
+    <text x="0" y="230.0" class="row-20">&#160;.:-.-@@@@@#-=++=*%#+-*#%%%%@+-#*-*%*%*=</text>
+    <style> .row-22 { animation: showRow_22 10.0s ease-out infinite; } </style>
+    <text x="0" y="241.5" class="row-21">-=++*%%@%%%=-+*+-####-*%%%@%@%%%%%%%#%%*</text>
+    <style> .row-23 { animation: showRow_23 10.0s ease-out infinite; } </style>
+    <text x="0" y="253.0" class="row-22">*##+%@@%#@*:=**+-#%%*=*#%%%@@%@%##%@%%#*</text>
+    <style> .row-24 { animation: showRow_24 10.0s ease-out infinite; } </style>
+    <text x="0" y="264.5" class="row-23">#*+%%%@%%@*:=**==%#*+*%*##%%%%%%@%%%@@%#</text>
+    <style> .row-25 { animation: showRow_25 10.0s ease-out infinite; } </style>
+    <text x="0" y="276.0" class="row-24">%##%%%#+%#++*#*==###*+**#***%%#+#%%%%%@@</text>
+    <text x="0" y="287.5" class="row-25">-#%#%%#+%#.-*=-&#160;:++##*++=+*%%%%##%%%#%%%</text>
+  </g>
+  <g transform="translate(14, 95)">
+    <rect x="0" y="0" width="342" height="12" fill="url(#laserGrad)" class="laser-beam" />
+  </g>
+  <rect x="12" y="90" width="346" height="315" fill="url(#scanlines)" pointer-events="none" />
+  <line x1="10" y1="412" x2="360" y2="412" stroke="#21262d" stroke-width="1" />
+  <g transform="translate(18, 430)">
+    <text x="0" y="0" class="footer-txt">STATUS: <tspan class="status-online">ONLINE</tspan></text>
+    <text x="140" y="0" class="footer-txt">RENDER: 100%</text>
+    <rect x="240" y="-9" width="7" height="11" class="blink-cursor" />
+  </g>
 </g>
 </svg>

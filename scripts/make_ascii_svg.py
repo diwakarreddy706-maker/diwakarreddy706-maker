@@ -1,193 +1,297 @@
 #!/usr/bin/env python3
 """
 make_ascii_svg.py
-Converts a preprocessed photo (or fallback image) into a monochrome animated SVG ASCII portrait.
-If no photo is found, generates a clearly marked developer avatar ASCII placeholder SVG.
-Output: ascii-portrait.svg in the repository root.
+Redesigns ascii-portrait.svg to feature a multi-stage terminal boot animation:
+Stage 1: Terminal window fade-in
+Stage 2: Command typing ($ ./render_portrait.sh)
+Stage 3: Image loading progress bar ([████████████████████] 100%)
+Stage 4: Top-to-bottom line-by-line ASCII portrait reveal (from IMG_9746.JPG.jpeg)
+Stage 5: Vertical CRT scanline beam pass
+Stage 6: Blinking terminal cursor & status bar
+Stage 7: Smooth loop restart cycle
 """
 
 import os
 import sys
-from PIL import Image
+from PIL import Image, ImageEnhance
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 PREPROCESSED_PHOTO = os.path.join(DATA_DIR, "preprocessed_photo.png")
 OUTPUT_SVG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ascii-portrait.svg")
 
-# Density ramp specified in requirements
-DENSITY_RAMP = " .`:-=+*cs#%@"
-
-# Default placeholder ASCII portrait lines when no photo is provided
-PLACEHOLDER_ASCII = [
-    "   ===================================   ",
-    "   |    [ DEVELOPER ASCII PORTRAIT ] |   ",
-    "   ===================================   ",
-    "                                         ",
-    "               .----------------.        ",
-    "              /   .-----------.  \\       ",
-    "             /   /   (o) (o)   \\  \\      ",
-    "            |   |       ^       |  |     ",
-    "            |   |    \\_____/    |  |     ",
-    "             \\   \\             /  /      ",
-    "              \\   '-----------'  /       ",
-    "               '----------------'        ",
-    "                  /|   ||   |\\           ",
-    "                 / |   ||   | \\          ",
-    "                /  |===||===|  \\         ",
-    "               (   |   ||   |   )        ",
-    "                |  |___||___|  |         ",
-    "                |  |        |  |         ",
-    "               /____\\      /____\\        ",
-    "                                         ",
-    "   -----------------------------------   ",
-    "   | [PLACEHOLDER] Add photo.jpg and |   ",
-    "   | run python scripts/prep_photo.py|   ",
-    "   -----------------------------------   "
-]
+# Density ramp requested by spec
+DENSITY_RAMP = " .:-=+*#%@"
 
 
-def image_to_ascii_lines(image_path, width=46):
-    """Converts a photo to a list of ASCII strings using the density ramp."""
-    if not os.path.exists(image_path):
+def generate_ascii_grid_from_photo(photo_path, ascii_width=40):
+    if not os.path.exists(photo_path):
         return None
 
     try:
-        img = Image.open(image_path).convert("L")
-        # Aspect ratio compensation for character cell height (~0.5)
-        w_percent = width / float(img.size[0])
-        h_size = int((float(img.size[1]) * float(w_percent)) * 0.5)
-        
-        img_resized = img.resize((width, h_size), Image.Resampling.LANCZOS)
-        
+        img = Image.open(photo_path)
+        w, h = img.size
+
+        # If original image is square/wide (e.g. 4284x4284), crop head & shoulders focus
+        if 0.8 <= (w / float(h)) <= 1.2:
+            left = int(w * 0.35)
+            top = int(h * 0.22)
+            right = int(w * 0.68)
+            bottom = int(h * 0.65)
+            img = img.crop((left, top, right, bottom))
+
+        # Convert to grayscale & optimize contrast
+        gray = img.convert("L")
+        enhancer = ImageEnhance.Contrast(gray)
+        enhanced = enhancer.enhance(2.2)
+        brightener = ImageEnhance.Brightness(enhanced)
+        brightened = brightener.enhance(1.1)
+
+        # Aspect ratio compensation for monospace character height (~0.5 ratio)
+        w_percent = ascii_width / float(brightened.size[0])
+        ascii_height = int((float(brightened.size[1]) * float(w_percent)) * 0.5)
+
+        img_resized = brightened.resize((ascii_width, ascii_height), Image.Resampling.LANCZOS)
         pixels = list(img_resized.tobytes())
+
         ramp_len = len(DENSITY_RAMP)
-        
-        ascii_lines = []
-        for row in range(h_size):
+        lines = []
+
+        for row in range(ascii_height):
             line_chars = []
-            for col in range(width):
-                pixel_val = pixels[row * width + col]
+            for col in range(ascii_width):
+                p = pixels[row * ascii_width + col]
                 # Map 0..255 to index 0..ramp_len-1
-                char_idx = int((pixel_val / 255.0) * (ramp_len - 1))
+                char_idx = int((p / 255.0) * (ramp_len - 1))
                 line_chars.append(DENSITY_RAMP[char_idx])
-            ascii_lines.append("".join(line_chars))
-            
-        return ascii_lines
+            lines.append("".join(line_chars))
+
+        return lines
     except Exception as e:
-        print(f"[WARNING] Error reading photo for ASCII conversion: {e}")
+        print(f"[ERROR] Failed to convert image to ASCII: {e}")
         return None
 
 
-def generate_ascii_svg(ascii_lines, is_placeholder=False):
+def generate_redesigned_animated_svg(ascii_lines):
     svg_width = 370
     svg_height = 450
-    start_y = 62
-    line_height = 14
-    
+    total_loop_time = 10.0  # seconds
+
     svg_lines = []
     svg_lines.append('<?xml version="1.0" encoding="UTF-8"?>')
     svg_lines.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">')
     svg_lines.append('<defs>')
+    
+    # CRT Scanline Pattern
+    svg_lines.append('  <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">')
+    svg_lines.append('    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.3" />')
+    svg_lines.append('  </pattern>')
+
+    # Vertical Scanline Laser Gradient
+    svg_lines.append('  <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">')
+    svg_lines.append('    <stop offset="0%" stop-color="#3fb950" stop-opacity="0" />')
+    svg_lines.append('    <stop offset="50%" stop-color="#56d364" stop-opacity="0.8" />')
+    svg_lines.append('    <stop offset="100%" stop-color="#3fb950" stop-opacity="0" />')
+    svg_lines.append('  </linearGradient>')
+
     svg_lines.append('<style>')
-    svg_lines.append('''
-        @keyframes printRow {
-            0% { opacity: 0; transform: translateY(-4px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .bg { fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }
-        .dot-red { fill: #ff5f56; }
-        .dot-yellow { fill: #ffbd2e; }
-        .dot-green { fill: #27c93f; }
-        .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
-        .ascii-text {
+    svg_lines.append(f'''
+        /* Overall Loop Timeline ({total_loop_time}s) */
+        @keyframes windowAppear {{
+            0% {{ opacity: 0; transform: scale(0.96); }}
+            4% {{ opacity: 1; transform: scale(1); }}
+            92% {{ opacity: 1; transform: scale(1); }}
+            98% {{ opacity: 0; transform: scale(0.98); }}
+            100% {{ opacity: 0; }}
+        }}
+        @keyframes typeCmd {{
+            0% {{ width: 0ch; opacity: 1; }}
+            12% {{ width: 23ch; opacity: 1; }}
+            92% {{ width: 23ch; opacity: 1; }}
+            98% {{ width: 0ch; opacity: 0; }}
+            100% {{ width: 0ch; opacity: 0; }}
+        }}
+        @keyframes showLoading {{
+            0% {{ opacity: 0; }}
+            14% {{ opacity: 0; }}
+            16% {{ opacity: 1; }}
+            92% {{ opacity: 1; }}
+            98% {{ opacity: 0; }}
+            100% {{ opacity: 0; }}
+        }}
+        @keyframes progressFill {{
+            0% {{ width: 0px; }}
+            16% {{ width: 0px; }}
+            25% {{ width: 140px; }}
+            92% {{ width: 140px; }}
+            98% {{ width: 0px; }}
+            100% {{ width: 0px; }}
+        }}
+        @keyframes printLine {{
+            0% {{ opacity: 0; transform: translateY(-3px); }}
+            100% {{ opacity: 1; transform: translateY(0); }}
+        }}
+        @keyframes laserSweep {{
+            0% {{ transform: translateY(0px); opacity: 0; }}
+            58% {{ transform: translateY(0px); opacity: 0; }}
+            60% {{ opacity: 0.9; }}
+            78% {{ transform: translateY(310px); opacity: 0.9; }}
+            80% {{ opacity: 0; }}
+            100% {{ opacity: 0; }}
+        }}
+        @keyframes cursorBlink {{
+            0%, 49% {{ opacity: 1; }}
+            50%, 100% {{ opacity: 0; }}
+        }}
+
+        .term-card {{
+            animation: windowAppear {total_loop_time}s ease-in-out infinite;
+            transform-origin: center;
+        }}
+        .bg {{ fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }}
+        .dot-red {{ fill: #ff5f56; }}
+        .dot-yellow {{ fill: #ffbd2e; }}
+        .dot-green {{ fill: #27c93f; }}
+        .term-title {{ font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 11.5px; fill: #8b949e; font-weight: 600; }}
+        
+        .prompt-txt {{
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 10px;
+            font-size: 11px;
+            fill: #58a6ff;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: typeCmd {total_loop_time}s steps(23) infinite;
+        }}
+        .loading-box {{ animation: showLoading {total_loop_time}s infinite; }}
+        .load-txt {{ font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #8b949e; }}
+        .progress-bg {{ fill: #161b22; rx: 3px; ry: 3px; }}
+        .progress-bar {{ fill: #3fb950; rx: 3px; ry: 3px; animation: progressFill {total_loop_time}s ease-out infinite; }}
+        
+        .ascii-text {{
+            font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+            font-size: 9.5px;
             fill: #3fb950;
             white-space: pre;
-        }
-        .ascii-row {
-            animation: printRow 0.15s ease-out forwards;
+            letter-spacing: 0.4px;
+        }}
+        .ascii-row {{
             opacity: 0;
-        }
+            animation: printLine 0.2s ease-out forwards;
+        }}
+        .laser-beam {{
+            animation: laserSweep {total_loop_time}s ease-in-out infinite;
+        }}
+        .footer-txt {{ font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 10px; fill: #8b949e; }}
+        .status-online {{ fill: #3fb950; font-weight: bold; }}
+        .blink-cursor {{ animation: cursorBlink 0.8s infinite; fill: #3fb950; }}
     ''')
     svg_lines.append('</style>')
     svg_lines.append('</defs>')
 
+    # Outer Terminal Group
+    svg_lines.append('<g class="term-card">')
+
     # Background Card
-    svg_lines.append(f'<rect width="{svg_width}" height="{svg_height}" class="bg" />')
+    svg_lines.append(f'  <rect width="{svg_width}" height="{svg_height}" class="bg" />')
 
     # Terminal Top Bar
-    svg_lines.append('<g>')
-    svg_lines.append('  <circle cx="20" cy="22" r="5" class="dot-red" />')
-    svg_lines.append('  <circle cx="35" cy="22" r="5" class="dot-yellow" />')
-    svg_lines.append('  <circle cx="50" cy="22" r="5" class="dot-green" />')
-    title_text = "diwakarr@github: ~/portrait.asc" if not is_placeholder else "diwakarr@github: ~/placeholder.asc"
-    svg_lines.append(f'  <text x="65" y="26" class="term-title">{title_text}</text>')
-    svg_lines.append('</g>')
+    svg_lines.append('  <g>')
+    svg_lines.append('    <circle cx="20" cy="20" r="4.5" class="dot-red" />')
+    svg_lines.append('    <circle cx="34" cy="20" r="4.5" class="dot-yellow" />')
+    svg_lines.append('    <circle cx="48" cy="20" r="4.5" class="dot-green" />')
+    svg_lines.append('    <text x="62" y="24" class="term-title">diwakar@github: ~/portrait.asc</text>')
+    svg_lines.append('  </g>')
 
-    # Terminal Divider Line
-    svg_lines.append('<line x1="12" y1="38" x2="358" y2="38" stroke="#21262d" stroke-width="1" />')
+    # Terminal Top Divider
+    svg_lines.append('  <line x1="10" y1="36" x2="360" y2="36" stroke="#21262d" stroke-width="1" />')
 
-    # ASCII Text Rows
-    svg_lines.append('<g class="ascii-text">')
+    # STAGE 2: Command Prompt Typing
+    svg_lines.append('  <g transform="translate(18, 54)">')
+    svg_lines.append('    <text class="prompt-txt">$ ./render_portrait.sh</text>')
+    svg_lines.append('  </g>')
+
+    # STAGE 3: Loading Progress Indicator
+    svg_lines.append('  <g class="loading-box" transform="translate(18, 70)">')
+    svg_lines.append('    <text x="0" y="0" class="load-txt">Loading image: IMG_9746.JPG ...</text>')
+    svg_lines.append('    <rect x="0" y="8" width="140" height="6" class="progress-bg" />')
+    svg_lines.append('    <rect x="0" y="8" width="0" height="6" class="progress-bar" />')
+    svg_lines.append('  </g>')
+
+    # STAGE 4: ASCII Portrait Line-by-Line Reveal
+    svg_lines.append('  <g class="ascii-text" transform="translate(18, 106)">')
+    
+    num_rows = len(ascii_lines)
+    # Reveal rows between 2.6s and 5.6s (3.0s total reveal time across rows)
+    step_delay = 3.0 / max(num_rows, 1)
+
     for i, line in enumerate(ascii_lines):
-        y_pos = start_y + (i * line_height)
-        if y_pos > svg_height - 15:
-            break
-        delay = round(0.1 + (i * 0.035), 3)
-        # Escape XML characters inside ASCII string
+        y_pos = i * 11.5
+        row_delay = round(2.6 + (i * step_delay), 2)
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;").replace(" ", "&#160;")
-        svg_lines.append(f'  <text x="18" y="{y_pos}" class="ascii-row" style="animation-delay: {delay}s;">{escaped_line}</text>')
-    svg_lines.append('</g>')
+        
+        # Row visibility animation using keyframes
+        row_anim = f'''
+            @keyframes showRow_{i} {{
+                0% {{ opacity: 0; transform: translateY(-2px); }}
+                {int((row_delay / total_loop_time) * 100)}% {{ opacity: 0; transform: translateY(-2px); }}
+                {int(((row_delay + 0.15) / total_loop_time) * 100)}% {{ opacity: 1; transform: translateY(0); }}
+                92% {{ opacity: 1; transform: translateY(0); }}
+                98% {{ opacity: 0; }}
+                100% {{ opacity: 0; }}
+            }}
+        '''
+        # Embed row animation style rule
+        svg_lines.insert(len(svg_lines) - 1, f'    <style> .row-{i} {{ animation: showRow_{i} {total_loop_time}s ease-out infinite; }} </style>')
+        svg_lines.append(f'    <text x="0" y="{y_pos}" class="row-{i}">{escaped_line}</text>')
+        
+    svg_lines.append('  </g>')
 
+    # STAGE 5: Vertical CRT Laser Scanline Beam
+    svg_lines.append('  <g transform="translate(14, 95)">')
+    svg_lines.append('    <rect x="0" y="0" width="342" height="12" fill="url(#laserGrad)" class="laser-beam" />')
+    svg_lines.append('  </g>')
+
+    # CRT Scanline Pattern Overlay over portrait area
+    svg_lines.append('  <rect x="12" y="90" width="346" height="315" fill="url(#scanlines)" pointer-events="none" />')
+
+    # STAGE 6: Terminal Footer & Status Bar
+    svg_lines.append('  <line x1="10" y1="412" x2="360" y2="412" stroke="#21262d" stroke-width="1" />')
+    svg_lines.append('  <g transform="translate(18, 430)">')
+    svg_lines.append('    <text x="0" y="0" class="footer-txt">STATUS: <tspan class="status-online">ONLINE</tspan></text>')
+    svg_lines.append('    <text x="140" y="0" class="footer-txt">RENDER: 100%</text>')
+    svg_lines.append('    <rect x="240" y="-9" width="7" height="11" class="blink-cursor" />')
+    svg_lines.append('  </g>')
+
+    svg_lines.append('</g>')
     svg_lines.append('</svg>')
     return "\n".join(svg_lines)
 
 
 def main():
-    ascii_lines = None
-    is_placeholder = False
+    raw_photo = None
+    for cand in ["IMG_9746.JPG.jpeg", os.path.join(DATA_DIR, "photo.jpg"), "photo.jpg", PREPROCESSED_PHOTO]:
+        if os.path.exists(cand):
+            raw_photo = cand
+            break
 
-    # Check for preprocessed photo or potential original photo
-    if os.path.exists(PREPROCESSED_PHOTO):
-        print(f"[INFO] Found preprocessed photo at: {PREPROCESSED_PHOTO}")
-        ascii_lines = image_to_ascii_lines(PREPROCESSED_PHOTO, width=42)
+    if not raw_photo:
+        print("[ERROR] Could not find source photo (IMG_9746.JPG.jpeg).")
+        sys.exit(1)
 
-    if not ascii_lines:
-        # Check raw photo candidates in data/ or root directory
-        raw_candidates = [
-            os.path.join(DATA_DIR, "photo.jpg"),
-            os.path.join(DATA_DIR, "photo.png"),
-            "d.1.jpeg",
-            "IMG_9746.JPG.jpeg",
-            "photo.jpg",
-            "photo.png",
-            "profile.jpg",
-            "profile.png"
-        ]
-        for cand in raw_candidates:
-            if os.path.exists(cand):
-                print(f"[INFO] Found raw photo candidate at: {cand}")
-                ascii_lines = image_to_ascii_lines(cand, width=42)
-                if ascii_lines:
-                    break
+    print(f"[INFO] Generating redesigned ASCII portrait from: {raw_photo}")
+    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=40)
 
     if not ascii_lines:
-        print("[NOTICE] No valid photo found. Generating placeholder ASCII portrait SVG...")
-        ascii_lines = PLACEHOLDER_ASCII
-        is_placeholder = True
+        print("[ERROR] ASCII conversion failed.")
+        sys.exit(1)
 
-    svg_content = generate_ascii_svg(ascii_lines, is_placeholder=is_placeholder)
+    svg_content = generate_redesigned_animated_svg(ascii_lines)
 
     with open(OUTPUT_SVG, "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print(f"[SUCCESS] ASCII portrait SVG saved to: {OUTPUT_SVG}")
-    if is_placeholder:
-        print("[INFO] To replace placeholder with your own photo later:")
-        print("       1. Place your photo file at data/photo.jpg")
-        print("       2. Run: python scripts/prep_photo.py data/photo.jpg")
-        print("       3. Run: python scripts/make_ascii_svg.py")
+    print(f"[SUCCESS] Redesigned ASCII portrait SVG generated at: {OUTPUT_SVG}")
 
 
 if __name__ == "__main__":
