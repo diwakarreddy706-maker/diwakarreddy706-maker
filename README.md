@@ -21,33 +21,46 @@
 
 <br>
 
+<h3><code>diwakar@github ~ $ ./links.sh</code></h3>
+
+<p>
+  <a href="https://github.com/diwakarreddy706-maker"><img src="https://img.shields.io/badge/GITHUB-diwakarreddy706--maker-181717?style=for-the-badge&logo=github&logoColor=white&color=0d1117" alt="GitHub" /></a>
+  &nbsp;
+  <a href="mailto:diwakarreddy706@gmail.com"><img src="https://img.shields.io/badge/EMAIL-diwakarreddy706%40gmail.com-ea4335?style=for-the-badge&logo=gmail&logoColor=white&color=0d1117" alt="Email" /></a>
+  &nbsp;
+  <a href="https://github.com/diwakarreddy706-maker"><img src="https://img.shields.io/badge/LOCATION-India-238636?style=for-the-badge&logo=googlemaps&logoColor=white&color=0d1117" alt="Location" /></a>
+</p>
+
+<br>
+
 ---
 
 ### 🚀 About Me
 
 ```developer
-  Frontend Developer & UI/UX Specialist crafting high-performance,
-  interactive web applications with modern design systems and intuitive user experiences.
+  Python & AI Engineer specializing in voice assistants, automated systems,
+  financial management suites, and interactive data visualizers.
 ```
 
-<b>Frontend Development</b> &bull; <b>UI/UX Architecture</b> &bull; <b>Web Applications</b>
+<b>Python Development</b> &bull; <b>AI & Automation</b> &bull; <b>Full-Stack Web Systems</b>
 
 <br>
 
 #### 🛠️ Tech Stack & Tools
 
-`HTML5` &bull; `CSS3` &bull; `JavaScript` &bull; `Java` &bull; `SQL` &bull; `Figma`
+`Python` &bull; `Django` &bull; `MySQL` &bull; `JavaScript` &bull; `HTML5/CSS3` &bull; `Git` &bull; `SVG`
 
 <br>
 
-#### 🌟 Featured Projects
+#### 🌟 Featured GitHub Repositories
 
-| Project | Description | Tech Stack |
-| :--- | :--- | :--- |
-| **EduNova** | Modern interactive learning and education management platform | HTML, CSS, JavaScript |
-| **SentinelJob AI** | AI-driven job searching, application tracking, and career portal | JavaScript, UI/UX, Web API |
-| **CRS Online Services** | Online customer request & service portal with dynamic dashboard | Java, SQL, Frontend UI |
+| Repository | Description | Primary Tech | Link |
+| :--- | :--- | :--- | :--- |
+| **Denver-AI** | Local-first Voice & Desktop AI Assistant for Windows with WhatsApp automation & multi-model LLM routing | Python, AI | [View Repo](https://github.com/diwakarreddy706-maker/Denver-AI) |
+| **expense-tracking-system** | Enterprise Expense & Management System with Django, MySQL, financial ledger & analytics | Python, Django, MySQL | [View Repo](https://github.com/diwakarreddy706-maker/expense-tracking-system) |
+| **diwakarreddy706-maker** | Terminal-Inspired Animated GitHub Profile README with Heatmap, ASCII Portrait & Info Card | Python, SVG, GitHub Actions | [View Repo](https://github.com/diwakarreddy706-maker/diwakarreddy706-maker) |
 
 <br>
 
 </div>
+

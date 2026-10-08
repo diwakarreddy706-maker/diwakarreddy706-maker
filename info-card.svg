@@ -3,134 +3,102 @@
 <defs>
 <style>
 
-            @keyframes rowSlide {
-                0% { opacity: 0; transform: translateX(-10px); }
-                100% { opacity: 1; transform: translateX(0); }
-            }
-            @keyframes headerSlide {
-                0% { opacity: 0; transform: translateY(-6px); }
-                100% { opacity: 1; transform: translateY(0); }
-            }
-            .anim-header { animation: headerSlide 0.4s ease-out forwards; opacity: 0; }
-            .anim-row { animation: rowSlide 0.35s ease-out forwards; opacity: 0; }
-        
-
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
         .bg { fill: #0d1117; rx: 10px; ry: 10px; stroke: #30363d; stroke-width: 1px; }
         .dot-red { fill: #ff5f56; }
         .dot-yellow { fill: #ffbd2e; }
         .dot-green { fill: #27c93f; }
         .term-title { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
-        .prompt-user { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; fill: #58a6ff; font-weight: bold; }
-        .prompt-at { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; fill: #8b949e; }
-        .prompt-host { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 14px; fill: #3fb950; font-weight: bold; }
-        .divider { stroke: #30363d; stroke-width: 1px; stroke-dasharray: 4; }
-        .key-label { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #8b949e; font-weight: 600; }
-        .key-bullet { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; fill: #58a6ff; font-weight: bold; }
-        .val-text { font-family: 'Fira Code', Consolas, 'Courier New', monospace; font-size: 12px; font-weight: 500; }
+        
+        .metric-box { fill: #161b22; rx: 6px; ry: 6px; stroke: #21262d; stroke-width: 1px; }
+        .metric-icon { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #3fb950; }
+        .metric-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 10px; fill: #8b949e; }
+        .metric-val { font-family: 'Fira Code', Consolas, monospace; font-size: 18px; fill: #f0f6fc; font-weight: bold; }
+        .metric-sub { font-family: 'Fira Code', Consolas, monospace; font-size: 9px; fill: #6e7681; }
+        
+        .chart-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 11px; fill: #8b949e; }
+        .bar-bg { fill: #161b22; rx: 2px; ry: 2px; }
+        .bar-fill { fill: #26a641; rx: 2px; ry: 2px; }
+        .bar-fill:hover { fill: #39d353; }
+        .month-lbl { font-family: 'Fira Code', Consolas, monospace; font-size: 9px; fill: #6e7681; text-anchor: middle; }
+        
+        .anim-group { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
     
 </style>
 </defs>
 <rect width="490" height="450" class="bg" />
-<g class="anim-header" style="animation-delay: 0.05s;">
-  <circle cx="20" cy="22" r="5" class="dot-red" />
-  <circle cx="35" cy="22" r="5" class="dot-yellow" />
-  <circle cx="50" cy="22" r="5" class="dot-green" />
-  <text x="65" y="26" class="term-title">diwakarr@github: ~/neofetch</text>
+<g class="anim-group" style="animation-delay: 0.1s;">
+  <circle cx="20" cy="20" r="4.5" class="dot-red" />
+  <circle cx="34" cy="20" r="4.5" class="dot-yellow" />
+  <circle cx="48" cy="20" r="4.5" class="dot-green" />
+  <text x="62" y="24" class="term-title">diwakar@github: ~/stats.asc</text>
 </g>
-<line x1="12" y1="38" x2="478" y2="38" stroke="#21262d" stroke-width="1" />
-<g class="anim-header" style="animation-delay: 0.1s;">
-  <text x="24" y="66">
-    <tspan class="prompt-user">diwakarrreddy706-maker</tspan>
-    <tspan class="prompt-at">@</tspan>
-    <tspan class="prompt-host">github</tspan>
-  </text>
-  <line x1="24" y1="78" x2="466" y2="78" class="divider" />
+<line x1="10" y1="36" x2="480" y2="36" stroke="#21262d" stroke-width="1" />
+<g class="anim-group" style="animation-delay: 0.15s;">
+  <rect x="20" y="52" width="215" height="75" class="metric-box" />
+  <text x="35" y="70" class="metric-icon">⚡ <tspan class="metric-lbl">Current streak</tspan></text>
+  <text x="35" y="98" class="metric-val">1 <tspan class="metric-lbl">day</tspan></text>
+  <text x="35" y="114" class="metric-sub">Active GitHub streak</text>
 </g>
-<g class="anim-row" style="animation-delay: 0.15s;">
-  <text x="24" y="108">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">OS        </tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#79c0ff">GitHub Profile / Web Stack v2.4</tspan>
-  </text>
+<g class="anim-group" style="animation-delay: 0.2s;">
+  <rect x="255" y="52" width="215" height="75" class="metric-box" />
+  <text x="270" y="70" class="metric-icon">🔥 <tspan class="metric-lbl">Longest streak</tspan></text>
+  <text x="270" y="98" class="metric-val">5 <tspan class="metric-lbl">days</tspan></text>
+  <text x="270" y="114" class="metric-sub">Max consecutive activity</text>
 </g>
-<g class="anim-row" style="animation-delay: 0.21s;">
-  <text x="24" y="144">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">Host      </tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#7ee787">diwakarrreddy706-maker</tspan>
-  </text>
+<g class="anim-group" style="animation-delay: 0.25s;">
+  <rect x="20" y="140" width="215" height="75" class="metric-box" />
+  <text x="35" y="158" class="metric-icon">📊 <tspan class="metric-lbl">Contributions</tspan></text>
+  <text x="35" y="186" class="metric-val">121</tspan></text>
+  <text x="35" y="202" class="metric-sub">Total contributions in year</text>
 </g>
-<g class="anim-row" style="animation-delay: 0.27s;">
-  <text x="24" y="180">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">Role      </tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#ffa657">Frontend Developer / UI/UX</tspan>
-  </text>
-  <text x="145" y="196">
-    <tspan class="val-text" fill="#ffa657">Developer</tspan>
-  </text>
+<g class="anim-group" style="animation-delay: 0.3s;">
+  <rect x="255" y="140" width="215" height="75" class="metric-box" />
+  <text x="270" y="158" class="metric-icon">📈 <tspan class="metric-lbl">1 active day / avg</tspan></text>
+  <text x="270" y="186" class="metric-val">20 <tspan class="metric-sub">/ 6.0 daily</tspan></text>
+  <text x="270" y="202" class="metric-sub">Active coding breakdown</text>
 </g>
-<g class="anim-row" style="animation-delay: 0.33s;">
-  <text x="24" y="216">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">Focus     </tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#d2a8ff">Frontend Development, UI/UX and</tspan>
-  </text>
-  <text x="145" y="232">
-    <tspan class="val-text" fill="#d2a8ff">Web Projects</tspan>
-  </text>
-</g>
-<g class="anim-row" style="animation-delay: 0.39s;">
-  <text x="24" y="252">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">Tech Stack</tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#ff7b72">HTML, CSS, JavaScript, Java,</tspan>
-  </text>
-  <text x="145" y="268">
-    <tspan class="val-text" fill="#ff7b72">SQL, Figma</tspan>
-  </text>
-</g>
-<g class="anim-row" style="animation-delay: 0.45s;">
-  <text x="24" y="288">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">Projects  </tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#a5d6ff">EduNova, SentinelJob AI, CRS</tspan>
-  </text>
-  <text x="145" y="304">
-    <tspan class="val-text" fill="#a5d6ff">Online Services</tspan>
-  </text>
-</g>
-<g class="anim-row" style="animation-delay: 0.51s;">
-  <text x="24" y="324">
-    <tspan class="key-bullet">❯ </tspan>
-    <tspan class="key-label">Status    </tspan>
-    <tspan class="prompt-at">: </tspan>
-    <tspan class="val-text" fill="#56d364">Active &amp; Ready for Collaborations</tspan>
-  </text>
-</g>
-<g class="anim-row" style="animation-delay: 0.57s;">
-  <line x1="24" y1="378" x2="466" y2="378" class="divider" />
-  <rect x="24" y="398" width="20" height="12" rx="3" fill="#484f58" />
-  <rect x="50" y="398" width="20" height="12" rx="3" fill="#ff7b72" />
-  <rect x="76" y="398" width="20" height="12" rx="3" fill="#3fb950" />
-  <rect x="102" y="398" width="20" height="12" rx="3" fill="#d29922" />
-  <rect x="128" y="398" width="20" height="12" rx="3" fill="#58a6ff" />
-  <rect x="154" y="398" width="20" height="12" rx="3" fill="#bc8cff" />
-  <rect x="180" y="398" width="20" height="12" rx="3" fill="#39c5cf" />
-  <rect x="206" y="398" width="20" height="12" rx="3" fill="#b1bac4" />
-  <rect x="24" y="414" width="20" height="12" rx="3" fill="#484f58" opacity="0.6" />
-  <rect x="50" y="414" width="20" height="12" rx="3" fill="#ff7b72" opacity="0.6" />
-  <rect x="76" y="414" width="20" height="12" rx="3" fill="#3fb950" opacity="0.6" />
-  <rect x="102" y="414" width="20" height="12" rx="3" fill="#d29922" opacity="0.6" />
-  <rect x="128" y="414" width="20" height="12" rx="3" fill="#58a6ff" opacity="0.6" />
-  <rect x="154" y="414" width="20" height="12" rx="3" fill="#bc8cff" opacity="0.6" />
-  <rect x="180" y="414" width="20" height="12" rx="3" fill="#39c5cf" opacity="0.6" />
-  <rect x="206" y="414" width="20" height="12" rx="3" fill="#b1bac4" opacity="0.6" />
+<g class="anim-group" style="animation-delay: 0.35s;">
+  <text x="20" y="245" class="chart-lbl">📊 contributions / month</text>
+  <line x1="20" y1="255" x2="470" y2="255" stroke="#21262d" stroke-width="1" />
+  <rect x="30" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="30" y="406" width="24" height="4" class="bar-fill"><title>Nov 2025: 0 contributions</title></rect>
+  <text x="42" y="426" class="month-lbl">Nov</text>
+  <rect x="66" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="66" y="406" width="24" height="4" class="bar-fill"><title>Dec 2025: 0 contributions</title></rect>
+  <text x="78" y="426" class="month-lbl">Dec</text>
+  <rect x="102" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="102" y="406" width="24" height="4" class="bar-fill"><title>Jan 2026: 0 contributions</title></rect>
+  <text x="114" y="426" class="month-lbl">Jan</text>
+  <rect x="138" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="138" y="406" width="24" height="4" class="bar-fill"><title>Feb 2026: 0 contributions</title></rect>
+  <text x="150" y="426" class="month-lbl">Feb</text>
+  <rect x="174" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="174" y="406" width="24" height="4" class="bar-fill"><title>Mar 2026: 0 contributions</title></rect>
+  <text x="186" y="426" class="month-lbl">Mar</text>
+  <rect x="210" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="210" y="406" width="24" height="4" class="bar-fill"><title>Apr 2026: 0 contributions</title></rect>
+  <text x="222" y="426" class="month-lbl">Apr</text>
+  <rect x="246" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="246" y="406" width="24" height="4" class="bar-fill"><title>May 2026: 0 contributions</title></rect>
+  <text x="258" y="426" class="month-lbl">May</text>
+  <rect x="282" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="282" y="406" width="24" height="4" class="bar-fill"><title>Jun 2026: 0 contributions</title></rect>
+  <text x="294" y="426" class="month-lbl">Jun</text>
+  <rect x="318" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="318" y="406" width="24" height="4" class="bar-fill"><title>Jul 2026: 0 contributions</title></rect>
+  <text x="330" y="426" class="month-lbl">Jul</text>
+  <rect x="354" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="354" y="314" width="24" height="96" class="bar-fill"><title>Aug 2026: 47 contributions</title></rect>
+  <text x="366" y="426" class="month-lbl">Aug</text>
+  <rect x="390" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="390" y="280" width="24" height="130" class="bar-fill"><title>Sep 2026: 63 contributions</title></rect>
+  <text x="402" y="426" class="month-lbl">Sep</text>
+  <rect x="426" y="280" width="24" height="130" class="bar-bg" />
+  <rect x="426" y="390" width="24" height="20" class="bar-fill"><title>Oct 2026: 10 contributions</title></rect>
+  <text x="438" y="426" class="month-lbl">Oct</text>
 </g>
 </svg>
