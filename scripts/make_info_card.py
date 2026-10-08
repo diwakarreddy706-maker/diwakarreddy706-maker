@@ -115,7 +115,7 @@ def generate_info_card_svg(data):
     svg_lines.append('<g class="anim-group" style="animation-delay: 0.25s;">')
     svg_lines.append(f'  <rect x="20" y="140" width="{box_w}" height="{box_h}" class="metric-box" />')
     svg_lines.append('  <text x="35" y="158" class="metric-icon">📊 <tspan class="metric-lbl">Contributions</tspan></text>')
-    svg_lines.append(f'  <text x="35" y="186" class="metric-val">{total_contribs}</tspan></text>')
+    svg_lines.append(f'  <text x="35" y="186" class="metric-val">{total_contribs}</text>')
     svg_lines.append('  <text x="35" y="202" class="metric-sub">Total contributions in year</text>')
     svg_lines.append('</g>')
 
