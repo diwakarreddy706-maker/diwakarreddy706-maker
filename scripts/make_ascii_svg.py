@@ -30,12 +30,12 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=44):
         img = Image.open(photo_path)
         w, h = img.size
 
-        # Frame head, hair, eyes, smile, beard & shoulders from IMG_9746.JPG.jpeg
+        # Exact 3/4 Pose Crop Focus from IMG_9746.JPG.jpeg
         if 0.8 <= (w / float(h)) <= 1.2:
-            left = int(w * 0.35)
-            top = int(h * 0.22)
-            right = int(w * 0.65)
-            bottom = int(h * 0.60)
+            left = int(w * 0.40)
+            top = int(h * 0.28)
+            right = int(w * 0.68)
+            bottom = int(h * 0.65)
             img = img.crop((left, top, right, bottom))
 
         # Convert to grayscale & sharpen for high-definition facial contrast
