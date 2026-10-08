@@ -2,11 +2,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370 450" width="370" height="450">
 <defs>
   <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">
-    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.3" />
+    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.25" />
   </pattern>
   <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
     <stop offset="0%" stop-color="#3fb950" stop-opacity="0" />
-    <stop offset="50%" stop-color="#56d364" stop-opacity="0.8" />
+    <stop offset="50%" stop-color="#56d364" stop-opacity="0.85" />
     <stop offset="100%" stop-color="#3fb950" stop-opacity="0" />
   </linearGradient>
 <style>
@@ -42,15 +42,11 @@
             98% { width: 0px; }
             100% { width: 0px; }
         }
-        @keyframes printLine {
-            0% { opacity: 0; transform: translateY(-3px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
         @keyframes laserSweep {
             0% { transform: translateY(0px); opacity: 0; }
             58% { transform: translateY(0px); opacity: 0; }
             60% { opacity: 0.9; }
-            78% { transform: translateY(310px); opacity: 0.9; }
+            78% { transform: translateY(300px); opacity: 0.9; }
             80% { opacity: 0; }
             100% { opacity: 0; }
         }
@@ -84,16 +80,15 @@
         .progress-bg { fill: #161b22; rx: 3px; ry: 3px; }
         .progress-bar { fill: #3fb950; rx: 3px; ry: 3px; animation: progressFill 10.0s ease-out infinite; }
         
+        /* Centered bold ASCII Face Grid (75% usable terminal width) */
         .ascii-text {
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 9.5px;
+            font-size: 11.5px;
+            font-weight: bold;
             fill: #3fb950;
             white-space: pre;
-            letter-spacing: 0.4px;
-        }
-        .ascii-row {
-            opacity: 0;
-            animation: printLine 0.2s ease-out forwards;
+            letter-spacing: 1.2px;
+            text-anchor: middle;
         }
         .laser-beam {
             animation: laserSweep 10.0s ease-in-out infinite;
@@ -117,63 +112,49 @@
     <text class="prompt-txt">$ ./render_portrait.sh</text>
   </g>
   <g class="loading-box" transform="translate(18, 70)">
-    <text x="0" y="0" class="load-txt">Loading image: IMG_9746.JPG ...</text>
+    <text x="0" y="0" class="load-txt">Loading face: IMG_9746.JPG ...</text>
     <rect x="0" y="8" width="140" height="6" class="progress-bg" />
     <rect x="0" y="8" width="0" height="6" class="progress-bar" />
   </g>
     <style> .row-0 { animation: showRow_0 10.0s ease-out infinite; } </style>
-  <g class="ascii-text" transform="translate(18, 106)">
+  <g class="ascii-text" transform="translate(0, 108)">
     <style> .row-1 { animation: showRow_1 10.0s ease-out infinite; } </style>
-    <text x="0" y="0.0" class="row-0">--+###******+***##+++-=-++-::-*****%=++=</text>
+    <text x="185" y="0.0" class="row-0">:==*******++**#*+:=+**=:&#160;=-===</text>
     <style> .row-2 { animation: showRow_2 10.0s ease-out infinite; } </style>
-    <text x="0" y="11.5" class="row-1">..--=*#######**###%*=:*###*=.:+:+==%=+--</text>
+    <text x="185" y="14.5" class="row-1">.&#160;:+##########%%#*#%##%*-+-=+=</text>
     <style> .row-3 { animation: showRow_3 10.0s ease-out infinite; } </style>
-    <text x="0" y="23.0" class="row-2">.:&#160;.=*###########%%%##%%##%%==*-++++=+=:</text>
+    <text x="185" y="29.0" class="row-2">-.+%##########%########*-+====</text>
     <style> .row-4 { animation: showRow_4 10.0s ease-out infinite; } </style>
-    <text x="0" y="34.5" class="row-3">&#160;=::#%%#####################-=*-+-=+-=+-</text>
+    <text x="185" y="43.5" class="row-3">&#160;&#160;:-*%######***########*-+-+*#</text>
     <style> .row-5 { animation: showRow_5 10.0s ease-out infinite; } </style>
-    <text x="0" y="46.0" class="row-4">&#160;&#160;&#160;::=#%####%##**###%#######-=+-**#%+%+:</text>
+    <text x="185" y="58.0" class="row-4">*=.:==+##=.&#160;&#160;&#160;&#160;&#160;.-*####*-*###%</text>
     <style> .row-6 { animation: showRow_6 10.0s ease-out infinite; } </style>
-    <text x="0" y="57.5" class="row-5">=#=:.:+++##*-..&#160;&#160;&#160;&#160;.-+######-=*##%%*-+-:</text>
+    <text x="185" y="72.5" class="row-5">%#*#*-#%:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;-#**#*-#%+=*</text>
     <style> .row-7 { animation: showRow_7 10.0s ease-out infinite; } </style>
-    <text x="0" y="69.0" class="row-6">-#%*+#=-#%*&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*#####-=@#+=*#-+=-</text>
+    <text x="185" y="87.0" class="row-6">#*@@%#%*.&#160;&#160;::::&#160;&#160;&#160;.***#+-##+=*</text>
     <style> .row-8 { animation: showRow_8 10.0s ease-out infinite; } </style>
-    <text x="0" y="80.5" class="row-7">:##%%%#*%#.&#160;&#160;&#160;.:::&#160;&#160;&#160;&#160;=#*###=+%*+=*%**==</text>
+    <text x="185" y="101.5" class="row-7">*=######*..:=:=-&#160;:&#160;*#*#+:##+=*</text>
     <style> .row-9 { animation: showRow_9 10.0s ease-out infinite; } </style>
-    <text x="0" y="92.0" class="row-8">:*=#%%%%%%#.&#160;.=-:::&#160;&#160;&#160;.#*##*-=@**=#%#%*+</text>
+    <text x="185" y="116.0" class="row-8">#*+++++++-..=--:.:&#160;****#+%%*+#</text>
     <style> .row-10 { animation: showRow_10 10.0s ease-out infinite; } </style>
-    <text x="0" y="103.5" class="row-9">%#+*++***+*=:.-=-+*.=::#*##*-=%*+=*%+%%*</text>
+    <text x="185" y="130.5" class="row-9">*******%%+&#160;&#160;::&#160;&#160;&#160;&#160;.****####%#%</text>
     <style> .row-11 { animation: showRow_11 10.0s ease-out infinite; } </style>
-    <text x="0" y="115.0" class="row-10">*##********+&#160;&#160;:=-&#160;&#160;&#160;.&#160;.****###@##*%%%@@@</text>
+    <text x="185" y="145.0" class="row-10">+*****#@@#+-.&#160;.=+*+-++##++##**</text>
     <style> .row-12 { animation: showRow_12 10.0s ease-out infinite; } </style>
-    <text x="0" y="126.5" class="row-11">***#*****%%#=&#160;&#160;..&#160;&#160;::--****##**%%##%*%%%</text>
+    <text x="185" y="159.5" class="row-11">+++++#%%%%#+.&#160;.-#**#++++=-+=-+</text>
     <style> .row-13 { animation: showRow_13 10.0s ease-out infinite; } </style>
-    <text x="0" y="138.0" class="row-12">=+******#@@%#+=.&#160;.+*##+-=+*#*+###+*%#%%#</text>
+    <text x="185" y="174.0" class="row-12">=====#@@@%%:&#160;&#160;-+++*%@@%*=*=:.+</text>
     <style> .row-14 { animation: showRow_14 10.0s ease-out infinite; } </style>
-    <text x="0" y="149.5" class="row-13">=*+*+++%@%%@%*=&#160;&#160;.:##+%#**+++-==+-+%#@##</text>
+    <text x="185" y="188.5" class="row-13">:=++*%%%%@#:.-**+=*#%%@%**++=*</text>
     <style> .row-15 { animation: showRow_15 10.0s ease-out infinite; } </style>
-    <text x="0" y="161.0" class="row-14">===+==+%%%@%%*.&#160;&#160;-++++#%@@%#+=*--.+%*%#%</text>
+    <text x="185" y="203.0" class="row-14">.:-=+++==+=::=+++-=#@%%@#**=-#</text>
     <style> .row-16 { animation: showRow_16 10.0s ease-out infinite; } </style>
-    <text x="0" y="172.5" class="row-15">.:-+++*%@@%%@*::-**+++##%%@@#+#=+=*%*%##</text>
+    <text x="185" y="217.5" class="row-15">.:.&#160;&#160;&#160;&#160;&#160;&#160;&#160;::-=+#+::#@%%@#+=+#%</text>
     <style> .row-17 { animation: showRow_17 10.0s ease-out infinite; } </style>
-    <text x="0" y="184.0" class="row-16">:::-*****++**-.-+++++-*#@%@%%***=-#%#%**</text>
+    <text x="185" y="232.0" class="row-16">&#160;.:==-:::::-==*#*==@%%@@%+=*+#</text>
     <style> .row-18 { animation: showRow_18 10.0s ease-out infinite; } </style>
-    <text x="0" y="195.5" class="row-17">....&#160;.:...&#160;.:=:-=+#+-:=%@%%@%*+=+*%%*@##</text>
-    <style> .row-19 { animation: showRow_19 10.0s ease-out infinite; } </style>
-    <text x="0" y="207.0" class="row-18">..----.&#160;&#160;&#160;&#160;&#160;.:-==+%#+:=@%@@%@*==##%%##+#</text>
-    <style> .row-20 { animation: showRow_20 10.0s ease-out infinite; } </style>
-    <text x="0" y="218.5" class="row-19">.&#160;&#160;.:*%####*==++=*#*+=#@@%%%@*-*+.*%+*--</text>
-    <style> .row-21 { animation: showRow_21 10.0s ease-out infinite; } </style>
-    <text x="0" y="230.0" class="row-20">&#160;.:-.-@@@@@#-=++=*%#+-*#%%%%@+-#*-*%*%*=</text>
-    <style> .row-22 { animation: showRow_22 10.0s ease-out infinite; } </style>
-    <text x="0" y="241.5" class="row-21">-=++*%%@%%%=-+*+-####-*%%%@%@%%%%%%%#%%*</text>
-    <style> .row-23 { animation: showRow_23 10.0s ease-out infinite; } </style>
-    <text x="0" y="253.0" class="row-22">*##+%@@%#@*:=**+-#%%*=*#%%%@@%@%##%@%%#*</text>
-    <style> .row-24 { animation: showRow_24 10.0s ease-out infinite; } </style>
-    <text x="0" y="264.5" class="row-23">#*+%%%@%%@*:=**==%#*+*%*##%%%%%%@%%%@@%#</text>
-    <style> .row-25 { animation: showRow_25 10.0s ease-out infinite; } </style>
-    <text x="0" y="276.0" class="row-24">%##%%%#+%#++*#*==###*+**#***%%#+#%%%%%@@</text>
-    <text x="0" y="287.5" class="row-25">-#%#%%#+%#.-*=-&#160;:++##*++=+*%%%%##%%%#%%%</text>
+    <text x="185" y="246.5" class="row-17">&#160;&#160;.:%@@@@*-=+=*#*=+%%%%@%:++.+</text>
+    <text x="185" y="261.0" class="row-18">=+++%%%%%:-++-###++#%%%@%*%%#%</text>
   </g>
   <g transform="translate(14, 95)">
     <rect x="0" y="0" width="342" height="12" fill="url(#laserGrad)" class="laser-beam" />
@@ -182,8 +163,8 @@
   <line x1="10" y1="412" x2="360" y2="412" stroke="#21262d" stroke-width="1" />
   <g transform="translate(18, 430)">
     <text x="0" y="0" class="footer-txt">STATUS: <tspan class="status-online">ONLINE</tspan></text>
-    <text x="140" y="0" class="footer-txt">RENDER: 100%</text>
-    <rect x="240" y="-9" width="7" height="11" class="blink-cursor" />
+    <text x="140" y="0" class="footer-txt">FACE FOCUS: 100%</text>
+    <rect x="250" y="-9" width="7" height="11" class="blink-cursor" />
   </g>
 </g>
 </svg>

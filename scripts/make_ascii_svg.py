@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
 make_ascii_svg.py
-Redesigns ascii-portrait.svg to feature a multi-stage terminal boot animation:
-Stage 1: Terminal window fade-in
-Stage 2: Command typing ($ ./render_portrait.sh)
-Stage 3: Image loading progress bar ([████████████████████] 100%)
-Stage 4: Top-to-bottom line-by-line ASCII portrait reveal (from IMG_9746.JPG.jpeg)
-Stage 5: Vertical CRT scanline beam pass
-Stage 6: Blinking terminal cursor & status bar
-Stage 7: Smooth loop restart cycle
+Redesigns ascii-portrait.svg with primary focus on face recognizability:
+- 100% Focused Headshot Crop of Diwakar's face, hair, smile, beard & shoulders
+- 30-column ASCII resolution filling ~75% of usable terminal width
+- Centered alignment (x=185, text-anchor="middle") with bold monospace font
+- Multi-stage terminal boot animation:
+  Stage 1: Terminal window fade-in
+  Stage 2: Command typing ($ ./render_portrait.sh)
+  Stage 3: Image loading progress bar ([████████████████████] 100%)
+  Stage 4: Line-by-line ASCII portrait reveal
+  Stage 5: Vertical CRT laser scanline sweep
+  Stage 6: Status bar & blinking cursor
+  Stage 7: Smooth loop restart cycle
 """
 
 import os
@@ -23,7 +27,7 @@ OUTPUT_SVG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 DENSITY_RAMP = " .:-=+*#%@"
 
 
-def generate_ascii_grid_from_photo(photo_path, ascii_width=40):
+def generate_ascii_grid_from_photo(photo_path, ascii_width=30):
     if not os.path.exists(photo_path):
         return None
 
@@ -31,26 +35,24 @@ def generate_ascii_grid_from_photo(photo_path, ascii_width=40):
         img = Image.open(photo_path)
         w, h = img.size
 
-        # If original image is square/wide (e.g. 4284x4284), crop head & shoulders focus
+        # Tight Face & Headshot Crop Focus (Diwakar's face & hair)
         if 0.8 <= (w / float(h)) <= 1.2:
-            left = int(w * 0.35)
-            top = int(h * 0.22)
-            right = int(w * 0.68)
-            bottom = int(h * 0.65)
+            left = int(w * 0.36)
+            top = int(h * 0.23)
+            right = int(w * 0.64)
+            bottom = int(h * 0.58)
             img = img.crop((left, top, right, bottom))
 
-        # Convert to grayscale & optimize contrast
+        # Convert to grayscale & optimize contrast for high face definition
         gray = img.convert("L")
         enhancer = ImageEnhance.Contrast(gray)
-        enhanced = enhancer.enhance(2.2)
-        brightener = ImageEnhance.Brightness(enhanced)
-        brightened = brightener.enhance(1.1)
+        enhanced = enhancer.enhance(2.5)
 
-        # Aspect ratio compensation for monospace character height (~0.5 ratio)
-        w_percent = ascii_width / float(brightened.size[0])
-        ascii_height = int((float(brightened.size[1]) * float(w_percent)) * 0.5)
+        # Aspect ratio compensation for monospace character height (~0.52 ratio)
+        w_percent = ascii_width / float(enhanced.size[0])
+        ascii_height = int((float(enhanced.size[1]) * float(w_percent)) * 0.52)
 
-        img_resized = brightened.resize((ascii_width, ascii_height), Image.Resampling.LANCZOS)
+        img_resized = enhanced.resize((ascii_width, ascii_height), Image.Resampling.LANCZOS)
         pixels = list(img_resized.tobytes())
 
         ramp_len = len(DENSITY_RAMP)
@@ -83,13 +85,13 @@ def generate_redesigned_animated_svg(ascii_lines):
     
     # CRT Scanline Pattern
     svg_lines.append('  <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">')
-    svg_lines.append('    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.3" />')
+    svg_lines.append('    <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1" opacity="0.25" />')
     svg_lines.append('  </pattern>')
 
     # Vertical Scanline Laser Gradient
     svg_lines.append('  <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">')
     svg_lines.append('    <stop offset="0%" stop-color="#3fb950" stop-opacity="0" />')
-    svg_lines.append('    <stop offset="50%" stop-color="#56d364" stop-opacity="0.8" />')
+    svg_lines.append('    <stop offset="50%" stop-color="#56d364" stop-opacity="0.85" />')
     svg_lines.append('    <stop offset="100%" stop-color="#3fb950" stop-opacity="0" />')
     svg_lines.append('  </linearGradient>')
 
@@ -126,15 +128,11 @@ def generate_redesigned_animated_svg(ascii_lines):
             98% {{ width: 0px; }}
             100% {{ width: 0px; }}
         }}
-        @keyframes printLine {{
-            0% {{ opacity: 0; transform: translateY(-3px); }}
-            100% {{ opacity: 1; transform: translateY(0); }}
-        }}
         @keyframes laserSweep {{
             0% {{ transform: translateY(0px); opacity: 0; }}
             58% {{ transform: translateY(0px); opacity: 0; }}
             60% {{ opacity: 0.9; }}
-            78% {{ transform: translateY(310px); opacity: 0.9; }}
+            78% {{ transform: translateY(300px); opacity: 0.9; }}
             80% {{ opacity: 0; }}
             100% {{ opacity: 0; }}
         }}
@@ -168,16 +166,15 @@ def generate_redesigned_animated_svg(ascii_lines):
         .progress-bg {{ fill: #161b22; rx: 3px; ry: 3px; }}
         .progress-bar {{ fill: #3fb950; rx: 3px; ry: 3px; animation: progressFill {total_loop_time}s ease-out infinite; }}
         
+        /* Centered bold ASCII Face Grid (75% usable terminal width) */
         .ascii-text {{
             font-family: 'Fira Code', Consolas, 'Courier New', monospace;
-            font-size: 9.5px;
+            font-size: 11.5px;
+            font-weight: bold;
             fill: #3fb950;
             white-space: pre;
-            letter-spacing: 0.4px;
-        }}
-        .ascii-row {{
-            opacity: 0;
-            animation: printLine 0.2s ease-out forwards;
+            letter-spacing: 1.2px;
+            text-anchor: middle;
         }}
         .laser-beam {{
             animation: laserSweep {total_loop_time}s ease-in-out infinite;
@@ -213,20 +210,20 @@ def generate_redesigned_animated_svg(ascii_lines):
 
     # STAGE 3: Loading Progress Indicator
     svg_lines.append('  <g class="loading-box" transform="translate(18, 70)">')
-    svg_lines.append('    <text x="0" y="0" class="load-txt">Loading image: IMG_9746.JPG ...</text>')
+    svg_lines.append('    <text x="0" y="0" class="load-txt">Loading face: IMG_9746.JPG ...</text>')
     svg_lines.append('    <rect x="0" y="8" width="140" height="6" class="progress-bg" />')
     svg_lines.append('    <rect x="0" y="8" width="0" height="6" class="progress-bar" />')
     svg_lines.append('  </g>')
 
-    # STAGE 4: ASCII Portrait Line-by-Line Reveal
-    svg_lines.append('  <g class="ascii-text" transform="translate(18, 106)">')
+    # STAGE 4: Centered Bold ASCII Face Reveal
+    svg_lines.append('  <g class="ascii-text" transform="translate(0, 108)">')
     
     num_rows = len(ascii_lines)
     # Reveal rows between 2.6s and 5.6s (3.0s total reveal time across rows)
     step_delay = 3.0 / max(num_rows, 1)
 
     for i, line in enumerate(ascii_lines):
-        y_pos = i * 11.5
+        y_pos = i * 14.5
         row_delay = round(2.6 + (i * step_delay), 2)
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;").replace(" ", "&#160;")
         
@@ -243,7 +240,7 @@ def generate_redesigned_animated_svg(ascii_lines):
         '''
         # Embed row animation style rule
         svg_lines.insert(len(svg_lines) - 1, f'    <style> .row-{i} {{ animation: showRow_{i} {total_loop_time}s ease-out infinite; }} </style>')
-        svg_lines.append(f'    <text x="0" y="{y_pos}" class="row-{i}">{escaped_line}</text>')
+        svg_lines.append(f'    <text x="185" y="{y_pos}" class="row-{i}">{escaped_line}</text>')
         
     svg_lines.append('  </g>')
 
@@ -259,8 +256,8 @@ def generate_redesigned_animated_svg(ascii_lines):
     svg_lines.append('  <line x1="10" y1="412" x2="360" y2="412" stroke="#21262d" stroke-width="1" />')
     svg_lines.append('  <g transform="translate(18, 430)">')
     svg_lines.append('    <text x="0" y="0" class="footer-txt">STATUS: <tspan class="status-online">ONLINE</tspan></text>')
-    svg_lines.append('    <text x="140" y="0" class="footer-txt">RENDER: 100%</text>')
-    svg_lines.append('    <rect x="240" y="-9" width="7" height="11" class="blink-cursor" />')
+    svg_lines.append('    <text x="140" y="0" class="footer-txt">FACE FOCUS: 100%</text>')
+    svg_lines.append('    <rect x="250" y="-9" width="7" height="11" class="blink-cursor" />')
     svg_lines.append('  </g>')
 
     svg_lines.append('</g>')
@@ -279,8 +276,8 @@ def main():
         print("[ERROR] Could not find source photo (IMG_9746.JPG.jpeg).")
         sys.exit(1)
 
-    print(f"[INFO] Generating redesigned ASCII portrait from: {raw_photo}")
-    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=40)
+    print(f"[INFO] Generating centered face-focused ASCII portrait from: {raw_photo}")
+    ascii_lines = generate_ascii_grid_from_photo(raw_photo, ascii_width=30)
 
     if not ascii_lines:
         print("[ERROR] ASCII conversion failed.")
@@ -291,7 +288,7 @@ def main():
     with open(OUTPUT_SVG, "w", encoding="utf-8") as f:
         f.write(svg_content)
 
-    print(f"[SUCCESS] Redesigned ASCII portrait SVG generated at: {OUTPUT_SVG}")
+    print(f"[SUCCESS] Centered face-focused ASCII portrait SVG generated at: {OUTPUT_SVG}")
 
 
 if __name__ == "__main__":
