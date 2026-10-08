@@ -13,13 +13,14 @@ import sys
 DATA_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "contributions.json")
 OUTPUT_SVG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "contrib-heatmap.svg")
 
-# GitHub dark theme level colors
+# GitHub dark theme level colors (with Level 5 neon peak top end)
 LEVEL_COLORS = {
     0: "#161b22",
     1: "#0e4429",
     2: "#006d32",
     3: "#26a641",
-    4: "#39d353"
+    4: "#39d353",
+    5: "#69f0a0"
 }
 
 DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
